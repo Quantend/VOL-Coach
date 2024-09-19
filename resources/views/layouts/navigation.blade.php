@@ -4,9 +4,9 @@
         <div class="flex justify-between h-24">
             <div class="flex">
                 <!-- Logo -->
-                <div class="shrink-0 flex items-center">
+                <div class="shrink-0 flex items-center w-60">
                     <a href="{{ route('dashboard') }}">
-                        <img class="h-24" src="{{asset('gilde.png')}}">
+                        <img class="h-24" src="{{asset('gilde-logo-long.svg')}}">
                     </a>
                 </div>
 
@@ -16,12 +16,7 @@
                         {{ __('Home') }}
                     </x-nav-link>
                 </div>
-
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('hoofdthema')" :active="request()->routeIs('hoofdthema')">
-                        {{ __("Hoofdthema's") }}
-                    </x-nav-link>
-                </div>
+                
             </div>
 
             <!-- Settings Dropdown -->

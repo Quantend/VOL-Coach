@@ -39,7 +39,7 @@
                 </a>
             @endif
 
-            <x-primary-button class="ms-3">
+            <x-primary-button class="ms-3 mr-2">
                 {{ __('Log in') }}
             </x-primary-button>
             @if (Route::has('register'))

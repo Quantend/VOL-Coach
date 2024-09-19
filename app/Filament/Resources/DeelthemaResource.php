@@ -62,7 +62,7 @@ class DeelthemaResource extends Resource
                 FileUpload::make('media')
                     ->disk('public')
                     ->acceptedFileTypes(['video/mp4'])
-                    ->maxSize(102400),
+                    ->maxSize(512000),
             ]);
 
     }

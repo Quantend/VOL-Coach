@@ -55,14 +55,14 @@ class DeelthemaResource extends Resource
                         'underline',
                         'undo',
                     ]),
-                Repeater::make('vragenlijst')
+                Repeater::make('vragen')
                     ->schema([
                         TextInput::make('vraag')->required(),
                     ]),
-                FileUpload::make('Upload video')
+                FileUpload::make('media')
                     ->disk('public')
                     ->acceptedFileTypes(['video/mp4'])
-                    ->maxSize(512000),
+                    ->maxSize(102400),
             ]);
 
     }

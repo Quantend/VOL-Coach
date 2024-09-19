@@ -7,6 +7,7 @@ use App\Filament\Resources\HoofdthemaResource\RelationManagers;
 use App\Models\Hoofdthema;
 use Filament\Forms;
 use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -29,18 +30,8 @@ class HoofdthemaResource extends Resource
                 TextInput::make('naam')
                     ->required()
                     ->maxLength(255),
-                RichEditor::make('beschrijving')
-                    ->required()
-                    ->toolbarButtons([
-                        'bold',
-                        'italic',
-                        'underline',
-                        'link',
-                        'bulletList',
-                        'orderedList',
-                        'quote',
-                        'codeBlock',
-                    ]),
+                Textarea::make('beschrijving')
+                    ->required(),
             ]);
     }
 

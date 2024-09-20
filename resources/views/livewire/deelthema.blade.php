@@ -6,9 +6,13 @@
                 Terug naar Hoofdthema's
             </button>
             <div class="flex justify-center my-2">
+                @if(!empty($videoId))
                 <iframe height="400" width="600" controls src="https://www.youtube.com/embed/{{ $videoId }}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                @endif
             </div>
+            <div>
             {!! $deelthema->content !!}
+            </div>
         </div>
     </div>
 </div>

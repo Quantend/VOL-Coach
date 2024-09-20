@@ -40,7 +40,6 @@ class DeelthemaResource extends Resource
                 TextInput::make('media')
                     ->label('Youtube link'),
                 RichEditor::make('content')
-                    ->required()
                     ->toolbarButtons([
                         'attachFiles',
                         'blockquote',

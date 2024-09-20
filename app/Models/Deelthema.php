@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Storage;
 
 class Deelthema extends Model
 {
-    protected $fillable = ['naam', 'beschrijving', 'vragen', 'hoofdthema_id', 'media'];
+    protected $fillable = ['naam', 'beschrijving', 'vragen', 'content', 'hoofdthema_id', 'media'];
 
     public function hoofdthema()
     {

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('naam');
             $table->text('beschrijving')->nullable();
             $table->json('vragen');
+            $table->text('content')->nullable();
             $table->foreignId('hoofdthema_id')->constrained()->onDelete('cascade');
             $table->string('media')->nullable();
             $table->timestamps();

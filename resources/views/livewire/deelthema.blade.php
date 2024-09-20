@@ -11,7 +11,7 @@
                     Your browser does not support the video tag.
                 </video>
             </div>
-            <p class="text-gray-800">{{ $deelthema->beschrijving }}</p>
+            {!! $deelthema->content !!}
         </div>
     </div>
 </div>

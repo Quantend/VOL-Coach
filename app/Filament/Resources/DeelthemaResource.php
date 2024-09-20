@@ -37,7 +37,8 @@ class DeelthemaResource extends Resource
                     ->label('Hoofdthema')
                     ->options(Hoofdthema::all()->pluck('naam', 'id'))
                     ->required(),
-                RichEditor::make('beschrijving')
+                TextInput::make('beschrijving'),
+                RichEditor::make('content')
                     ->required()
                     ->toolbarButtons([
                         'attachFiles',

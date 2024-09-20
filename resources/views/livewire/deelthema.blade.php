@@ -6,10 +6,7 @@
                 Terug naar Hoofdthema's
             </button>
             <div class="flex justify-center my-2">
-                <video width="600" controls>
-                    <source src="{{ asset('storage/' . $deelthema->media) }}" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
+                <iframe height="400" width="600" controls src="https://www.youtube.com/embed/{{ $videoId }}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
             {!! $deelthema->content !!}
         </div>

@@ -7,7 +7,6 @@ use App\Filament\Resources\DeelthemaResource\RelationManagers;
 use App\Models\Deelthema;
 use App\Models\Hoofdthema;
 use Filament\Forms;
-use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -38,6 +37,8 @@ class DeelthemaResource extends Resource
                     ->options(Hoofdthema::all()->pluck('naam', 'id'))
                     ->required(),
                 TextInput::make('beschrijving'),
+                TextInput::make('media')
+                    ->label('Youtube link'),
                 RichEditor::make('content')
                     ->required()
                     ->toolbarButtons([
@@ -58,12 +59,8 @@ class DeelthemaResource extends Resource
                     ]),
                 Repeater::make('vragen')
                     ->schema([
-                        TextInput::make('vraag')->required(),
+                        TextInput::make('vraag')
                     ]),
-                FileUpload::make('media')
-                    ->disk('public')
-                    ->acceptedFileTypes(['video/mp4'])
-                    ->maxSize(102400),
             ]);
 
     }

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('naam');
             $table->text('beschrijving')->nullable();
-            $table->json('vragen');
+            $table->json('vragen')->nullable();
             $table->text('content')->nullable();
             $table->foreignId('hoofdthema_id')->constrained()->onDelete('cascade');
             $table->string('media')->nullable();

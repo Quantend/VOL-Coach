@@ -1,5 +1,5 @@
 <div class="max-w-7xl mx-auto sm:px-6 lg:px-10 space-y-6 mt-8">
-    <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
+    <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
         <div class="">
             @if($showHoofdthemaList)
                 <h1 class="text-3xl">Hoofdthema's</h1>

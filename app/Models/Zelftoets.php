@@ -7,11 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Zelftoets extends Model
 {
-    use HasFactory;
-
     protected $fillable = ['hoofdthema_id', 'user_id', 'uitslag'];
 
-    protected $casts = [
-        'uitslag' => 'array',
-    ];
+    protected $casts = ['uitslag' => 'array'];
 }

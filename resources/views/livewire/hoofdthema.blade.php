@@ -21,7 +21,7 @@
                         @endif
                     </div>
                     <div>
-                        {!! $selectedHoofdthema->beschrijving !!}
+                        {!! $selectedHoofdthema->content !!}
                     </div>
                 <button class="text-blue-500 hover:cursor-pointer" wire:click="startZelfscoreToets">Zelfscore toets</button>
             @endif

@@ -34,6 +34,23 @@ class HoofdthemaResource extends Resource
                 TextInput::make('media')
                     ->label('Youtube link'),
                 Textarea::make('beschrijving'),
+                RichEditor::make('content')
+                    ->toolbarButtons([
+                        'attachFiles',
+                        'blockquote',
+                        'bold',
+                        'bulletList',
+                        'codeBlock',
+                        'h2',
+                        'h3',
+                        'italic',
+                        'link',
+                        'orderedList',
+                        'redo',
+                        'strike',
+                        'underline',
+                        'undo',
+                    ]),
             ]);
     }
 

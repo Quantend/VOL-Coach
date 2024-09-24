@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Livewire\DeelthemaComp;
+use App\Livewire\ZelftoetsComp;
 use App\Livewire\HoofdthemaComp;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -19,7 +20,9 @@ Route::get('/dashboard', function () {
 
 Route::get('/hoofdthema', HoofdthemaComp::class)->name('hoofdthema');
 
-Route::get('/deelthema/{deelthema}', DeelthemaComp::class)->name('deelthema');
+Route::get('/deelthema/{id}', DeelthemaComp::class)->name('deelthema');
+
+Route::get('/zelftoets/{hoofdthema}', ZelftoetsComp::class)->name('zelftoets');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

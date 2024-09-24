@@ -7,25 +7,23 @@
                     @foreach($hoofdthemas as $hoofdthema)
                         <div class="p-4" wire:click="selectHoofdthema({{ $hoofdthema->id }})">
                             <p class="text-blue-500 underline text-xl hover:cursor-pointer">{{ $hoofdthema->naam }}</p>
-                            <p class="text-gray-800">{{ $hoofdthema->beschrijving }}</p>
                         </div>
                     @endforeach
                 </ul>
             @endif
 
             @if($selectedHoofdthema)
-                <h2 class="text-3xl">Deelthema's van {{ $selectedHoofdthema->naam }}</h2>
+                <h2 class="text-3xl">{{ $selectedHoofdthema->naam }}</h2>
                 <button class="text-red-500 hover:cursor-pointer" wire:click="backToHoofdthemaList">Terug naar hoofdthema's</button>
-                <ul>
-                    @foreach($selectedHoofdthema->deelthemas as $deelthema)
-                        <div class="p-4">
-                            <a href="{{ route('deelthema', ['deelthema' => $deelthema->naam]) }}" class="text-blue-500 underline text-xl hover:cursor-pointer">
-                                {{ $deelthema->naam }}
-                            </a>
-                            <p class="text-gray-800">{{ $deelthema->beschrijving }}</p>
-                        </div>
-                    @endforeach
-                </ul>
+                    <div class="flex justify-center my-2">
+                        @if(!empty($videoId))
+                            <iframe height="400" width="600" controls src="https://www.youtube.com/embed/{{ $videoId }}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        @endif
+                    </div>
+                    <div>
+                        {!! $selectedHoofdthema->beschrijving !!}
+                    </div>
+                <button class="text-blue-500 hover:cursor-pointer" wire:click="startZelfscoreToets">Zelfscore toets</button>
             @endif
         </div>
     </div>

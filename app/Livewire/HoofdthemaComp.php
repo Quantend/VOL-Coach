@@ -10,6 +10,7 @@ class HoofdthemaComp extends Component
     public $hoofdthemas;
     public $selectedHoofdthema;
     public $showHoofdthemaList = true;
+    public $videoId;
 
     public function mount()
     {
@@ -19,6 +20,7 @@ class HoofdthemaComp extends Component
     public function selectHoofdthema($hoofdthemaId)
     {
         $this->selectedHoofdthema = Hoofdthema::with('deelthemas')->find($hoofdthemaId);
+        $this->extractVideoId($this->selectedHoofdthema->media);
         $this->showHoofdthemaList = false;
     }
 
@@ -26,6 +28,34 @@ class HoofdthemaComp extends Component
     {
         $this->showHoofdthemaList = true;
         $this->selectedHoofdthema = false;
+    }
+
+    public function extractVideoId($url)
+    {
+        if (empty($url)) {
+            $this->videoId = null;
+            return;
+        }
+
+        $parsedUrl = parse_url($url);
+
+        if (!isset($parsedUrl['query'])) {
+            $this->videoId = null;
+            return;
+        }
+
+        parse_str($parsedUrl['query'], $queryParams);
+
+        if (isset($queryParams['v'])) {
+            $this->videoId = $queryParams['v'];
+        } else {
+            $this->videoId = null;
+        }
+    }
+
+    public function startZelfscoreToets()
+    {
+        return redirect()->route('zelftoets', ['hoofdthema' => $this->selectedHoofdthema->id]);
     }
 
     public function render()

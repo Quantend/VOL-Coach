@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Hoofdthema extends Model
 {
-    protected $fillable = ['naam', 'beschrijving'];
+    protected $fillable = ['naam', 'beschrijving', 'media'];
 
     public function deelthemas()
     {

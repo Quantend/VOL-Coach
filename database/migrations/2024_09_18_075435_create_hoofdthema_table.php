@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('naam');
             $table->text('beschrijving')->nullable();
+            $table->string('media')->nullable();
             $table->timestamps();
         });
     }

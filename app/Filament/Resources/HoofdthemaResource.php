@@ -6,6 +6,7 @@ use App\Filament\Resources\HoofdthemaResource\Pages;
 use App\Filament\Resources\HoofdthemaResource\RelationManagers;
 use App\Models\Hoofdthema;
 use Filament\Forms;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -30,8 +31,9 @@ class HoofdthemaResource extends Resource
                 TextInput::make('naam')
                     ->required()
                     ->maxLength(255),
-                Textarea::make('beschrijving')
-                    ->required(),
+                TextInput::make('media')
+                    ->label('Youtube link'),
+                Textarea::make('beschrijving'),
             ]);
     }
 

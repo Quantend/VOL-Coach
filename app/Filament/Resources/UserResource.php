@@ -11,15 +11,15 @@ use Filament\Tables\Actions\Action;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
-use Filament\Facades\Filament; // Zorg ervoor dat deze regel er is
+use Filament\Notifications\Notification; // Import Notification class
 
 class UserResource extends Resource
 {
     protected static ?string $model = User::class;
-    protected static ?string $navigationIcon = 'heroicon-o-user';
+    protected static ?string $navigationIcon = 'heroicon-o-users';
     protected static ?string $navigationGroup = 'User Management';
 
-    public static function form(Forms\Form $form): Forms\Form // Zorg ervoor dat de type-hints correct zijn
+    public static function form(Forms\Form $form): Forms\Form
     {
         return $form
             ->schema([
@@ -69,9 +69,9 @@ class UserResource extends Resource
                 SelectFilter::make('is_admin')
                     ->options([
                         '1' => 'Admin',
-                        '0' => 'User',
+                        '0' => 'Gebruiker',
                     ])
-                    ->label('Filter op Admin'),
+                    ->label('Filter op role'),
             ])
             ->actions([
                 Action::make('changePassword')
@@ -80,7 +80,11 @@ class UserResource extends Resource
                             'password' => Hash::make($data['new_password']),
                         ]);
 
-                        Filament::notify('success', 'Wachtwoord succesvol gewijzigd.'); 
+                        Notification::make()
+                            ->title('Succes!')
+                            ->success()
+                            ->body('Wachtwoord succesvol gewijzigd.')
+                            ->send(); 
                     })
                     ->form([
                         Forms\Components\TextInput::make('new_password')
@@ -96,12 +100,25 @@ class UserResource extends Resource
                     ])
                     ->icon('heroicon-o-key')
                     ->label('Wachtwoord Wijzigen'),
-                
+
                 Action::make('delete')
                     ->color('danger')
-                    ->action(fn (User $record) => $record->delete())
+                    ->action(function (User $record) {
+                        $record->delete();
+
+                        Notification::make()
+                            ->title('Succes!')
+                            ->success()
+                            ->body('De gebruiker is succesvol verwijderd.')
+                            ->send();
+                    })
                     ->icon('heroicon-o-trash')
-                    ->label('Verwijderen'),
+                    ->label('Verwijderen')
+                    ->requiresConfirmation()
+                    ->modalHeading('Bevestig Verwijdering')
+                    ->modalSubheading('Weet je zeker dat je deze gebruiker wilt verwijderen? Deze actie kan niet ongedaan worden gemaakt.')
+                    ->modalButton('Ja, verwijder deze gebruiker')
+                    ->modalWidth('lg'),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),

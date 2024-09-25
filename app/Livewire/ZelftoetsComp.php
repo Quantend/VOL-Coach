@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Uitdaging;
 use Livewire\Component;
 use App\Models\Deelthema;
 use App\Models\Zelftoets;
@@ -38,18 +39,19 @@ class ZelftoetsComp extends Component
     {
         $this->validate([
             'antwoorden' => 'required|array',
-            'antwoorden.*' => 'required|integer|min:1|max:5',
+            'antwoorden.*' => 'nullable|integer|min:1|max:5', // Antwoorden kunnen 'nullable' zijn om ze later op 3 te zetten
         ]);
 
         $uitslagArray = [];
         $deelthemaScores = [];
 
-        foreach ($this->antwoorden as $index => $antwoord) {
-            $vraag = $this->vragen[$index];
+        foreach ($this->vragen as $index => $vraag) {
+            // Als het antwoord niet is ingevuld, zet het op 3
+            $antwoord = $this->antwoorden[$index] ?? 3;
 
             // Opslaan van het antwoord per vraag
             $uitslagArray[] = [
-                'vraag_id' => $index,
+                'vraag' => $vraag['vraag'],
                 'deelthema_id' => $vraag['deelthema_id'],
                 'antwoord' => $antwoord,
             ];
@@ -67,30 +69,58 @@ class ZelftoetsComp extends Component
             $deelthemaScores[$vraag['deelthema_id']]['question_count'] += 1;
         }
 
-        // Zelftoets opslaan in de database
-        Zelftoets::create([
-            'hoofdthema_id' => $this->hoofdthemaId,
-            'user_id' => auth()->id(),
-            'uitslag' => $uitslagArray,
-        ]);
-
         // Bereken de laagste gemiddelde score per deelthema
         $laagsteDeelthemaId = null;
-        $laagsteGemiddelde = PHP_FLOAT_MAX; // Start met een zeer hoge waarde
+        $laagsteGemiddelde = PHP_FLOAT_MAX;
 
         foreach ($deelthemaScores as $deelthemaId => $scoreData) {
             $gemiddeldeScore = $scoreData['total_score'] / $scoreData['question_count'];
 
-            // Zoek de laagste gemiddelde score
             if ($gemiddeldeScore < $laagsteGemiddelde) {
                 $laagsteGemiddelde = $gemiddeldeScore;
                 $laagsteDeelthemaId = $deelthemaId;
             }
         }
 
-        // Redirect naar het deelthema met de laagste score
+        // Zoek de juiste uitdaging op basis van deelthema_id en niveau
+        $uitdaging = null;
+        if ($laagsteDeelthemaId !== null) {
+            $niveau = '';
+
+            if ($laagsteGemiddelde <= 3) {
+                $niveau = 'experimenteren';
+            } elseif ($laagsteGemiddelde > 3 && $laagsteGemiddelde <= 4) {
+                $niveau = 'toepassen';
+            } else {
+                $niveau = 'verdiepen';
+            }
+
+            $uitdaging = Uitdaging::where('deelthema_id', $laagsteDeelthemaId)
+                ->where('niveau', $niveau)
+                ->first();
+        }
+
+        // Verwijder de oude zelftoets als deze bestaat
+        $existingZelftoets = Zelftoets::where('hoofdthema_id', $this->hoofdthemaId)
+            ->where('user_id', auth()->id())
+            ->first();
+
+        if ($existingZelftoets) {
+            $existingZelftoets->delete();
+        }
+
+        // Maak de zelftoets aan met de juiste uitdaging_id
+        $zelftoets = Zelftoets::create([
+            'hoofdthema_id' => $this->hoofdthemaId,
+            'deelthema_id' => $laagsteDeelthemaId,
+            'user_id' => auth()->id(),
+            'uitslag' => $uitslagArray,
+            'uitdaging_id' => $uitdaging ? $uitdaging->id : null,
+        ]);
+
         return redirect()->route('deelthema', ['id' => $laagsteDeelthemaId]);
     }
+
 
 
 

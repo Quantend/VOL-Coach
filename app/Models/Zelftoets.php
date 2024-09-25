@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Zelftoets extends Model
 {
-    protected $fillable = ['hoofdthema_id', 'user_id', 'uitslag'];
+    protected $fillable = ['hoofdthema_id', 'deelthema_id', 'user_id', 'uitslag', 'uitdaging_id'];
 
     protected $casts = ['uitslag' => 'array'];
 }

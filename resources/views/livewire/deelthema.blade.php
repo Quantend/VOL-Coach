@@ -13,6 +13,23 @@
             <div>
             {!! $deelthema->content !!}
             </div>
+
+            @if($uitdaging)
+                <div class="mt-6">
+                    <h2 class="text-2xl font-bold">Uitdaging</h2>
+                    <p class="text-md font-semibold">Niveau: {{ $uitdaging->niveau }}</p>
+                </div>
+                @if(!empty($opdrachten))
+                    <div class="mt-6">
+                        <h2 class="text-2xl font-bold">Opdrachten</h2>
+                        <ul class="list-disc pl-5">
+                            @foreach($opdrachten as $opdracht)
+                                <li>{{ $opdracht['opdracht'] }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+            @endif
         </div>
     </div>
 </div>

@@ -1,3 +1,5 @@
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 <x-guest-layout>
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
@@ -13,13 +15,13 @@
         </div>
 
         <!-- Password -->
-        <div class="mt-4">
+        <div class="mt-4 relative">
             <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
+            <x-text-input id="myInput" class="block mt-1 w-full"
                             type="password"
                             name="password"
                             required autocomplete="current-password" />
+                            <ion-icon class="absolute inset-y-9 left-80 pl-14 text-gray-600 cursor-pointer text-xl" onclick="myFunction()" name="eye-outline"></ion-icon>
 
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
@@ -53,3 +55,15 @@
         </div>
     </form>
 </x-guest-layout>
+
+<script>
+function myFunction() {
+    var x = document.getElementById("myInput");
+    if (x.type === "password") {
+      x.type = "text";
+    } else {
+      x.type = "password";
+    }
+  }
+  </script>
+  

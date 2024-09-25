@@ -7,6 +7,7 @@
                     @foreach($hoofdthemas as $hoofdthema)
                         <div class="p-4" wire:click="selectHoofdthema({{ $hoofdthema->id }})">
                             <p class="text-blue-500 underline text-xl hover:cursor-pointer">{{ $hoofdthema->naam }}</p>
+                            <p class="text-gray-700">{{ $hoofdthema->beschrijving }}</p>
                         </div>
                     @endforeach
                 </ul>

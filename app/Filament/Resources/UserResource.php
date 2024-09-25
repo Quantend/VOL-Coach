@@ -11,7 +11,7 @@ use Filament\Tables\Actions\Action;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
-use Filament\Notifications\Notification; // Import Notification class
+use Filament\Notifications\Notification;
 
 class UserResource extends Resource
 {
@@ -26,23 +26,30 @@ class UserResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->label('Naam'),
-                
+
                 Forms\Components\TextInput::make('email')
                     ->email()
                     ->required()
                     ->label('E-mail')
                     ->unique(User::class, 'email', ignoreRecord: true),
-                
-                Forms\Components\Toggle::make('is_admin')
-                    ->label('Is Admin')
-                    ->required(),
-                
+
                 Forms\Components\TextInput::make('password')
                     ->password()
                     ->label('Wachtwoord')
                     ->rule(Password::default())
-                    ->dehydrated(fn ($state) => filled($state)) 
+                    ->dehydrated(fn ($state) => filled($state))
                     ->required(fn ($livewire) => $livewire instanceof Pages\CreateUser),
+
+                Forms\Components\TextInput::make('password_confirmation')
+                    ->password()
+                    ->label('Bevestig Wachtwoord')
+                    ->rule('required_with:password|same:password')
+                    ->dehydrated(fn ($state) => filled($state))
+                    ->required(fn ($livewire) => $livewire instanceof Pages\CreateUser),
+
+                Forms\Components\Toggle::make('is_admin')
+                ->label('Is Admin')
+                ->required(),
             ]);
     }
 
@@ -71,7 +78,7 @@ class UserResource extends Resource
                         '1' => 'Admin',
                         '0' => 'Gebruiker',
                     ])
-                    ->label('Filter op role'),
+                    ->label('Filter op rol'),
             ])
             ->actions([
                 Action::make('changePassword')
@@ -84,7 +91,7 @@ class UserResource extends Resource
                             ->title('Succes!')
                             ->success()
                             ->body('Wachtwoord succesvol gewijzigd.')
-                            ->send(); 
+                            ->send();
                     })
                     ->form([
                         Forms\Components\TextInput::make('new_password')
@@ -92,7 +99,7 @@ class UserResource extends Resource
                             ->label('Nieuw Wachtwoord')
                             ->required()
                             ->rule(Password::default()),
-                        
+
                         Forms\Components\TextInput::make('new_password_confirmation')
                             ->password()
                             ->label('Bevestig Nieuw Wachtwoord')

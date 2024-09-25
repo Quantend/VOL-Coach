@@ -17,7 +17,7 @@ class UserResource extends Resource
 {
     protected static ?string $model = User::class;
     protected static ?string $navigationIcon = 'heroicon-o-users';
-    protected static ?string $navigationGroup = 'User Management';
+    protected static ?string $navigationGroup = 'Gebruikersbeheer';
 
     public static function form(Forms\Form $form): Forms\Form
     {
@@ -76,7 +76,7 @@ class UserResource extends Resource
                 SelectFilter::make('is_admin')
                     ->options([
                         '1' => 'Admin',
-                        '0' => 'Gebruiker',
+                        '0' => 'User',
                     ])
                     ->label('Filter op rol'),
             ])

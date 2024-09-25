@@ -21,8 +21,8 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class HoofdthemaResource extends Resource
 {
     protected static ?string $model = Hoofdthema::class;
-
     protected static ?string $navigationIcon = 'heroicon-o-wallet';
+    protected static ?string $navigationGroup = 'Contentbeheer';
 
     public static function form(Form $form): Form
     {

@@ -21,8 +21,8 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class UitdagingResource extends Resource
 {
     protected static ?string $model = Uitdaging::class;
-
     protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
+    protected static ?string $navigationGroup = 'Contentbeheer';
 
     public static function form(Form $form): Form
     {

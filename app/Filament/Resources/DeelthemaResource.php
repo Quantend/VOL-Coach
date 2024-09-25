@@ -22,8 +22,8 @@ use Filament\Forms\Components\RichEditor;
 class DeelthemaResource extends Resource
 {
     protected static ?string $model = Deelthema::class;
-
     protected static ?string $navigationIcon = 'heroicon-o-window';
+    protected static ?string $navigationGroup = 'Contentbeheer';
 
     public static function form(Form $form): Form
     {

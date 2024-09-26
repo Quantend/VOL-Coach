@@ -1,11 +1,12 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use App\Livewire\DeelthemaComp;
 use App\Livewire\ZelftoetsComp;
 use App\Livewire\HoofdthemaComp;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HelpController;
+use App\Http\Controllers\ProfileController;
 
 Route::get('/', function () {
     if (Auth::check()) {
@@ -17,6 +18,8 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/help', [HelpController::class, 'index'])->name('help');
 
 Route::get('/hoofdthema', HoofdthemaComp::class)->name('hoofdthema');
 

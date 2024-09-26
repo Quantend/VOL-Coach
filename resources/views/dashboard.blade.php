@@ -3,7 +3,7 @@
     <div class="p-4 sm:p-8 bg-white shadow sm:rounded-xl">
         <div class="max-w-xl mx-auto">
 
-            <h1 class="text-3xl text-center mb-2">Home</h1>
+            <h1 class="text-3xl text-center mb-2">{{__('Home')}}</h1>
             <div> 
                 Lorem ipsum dolor sit amet. Et dolorem repudiandae sed possimus voluptas non obcaecati voluptatem qui accusantium galisum. 
                 Ut maiores tempora non eaque fugit sit cupiditate consequatur.

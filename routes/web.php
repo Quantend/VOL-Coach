@@ -3,6 +3,7 @@
 use App\Livewire\DeelthemaComp;
 use App\Livewire\ZelftoetsComp;
 use App\Livewire\HoofdthemaComp;
+use App\Livewire\HomeComp;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HelpController;
@@ -10,14 +11,19 @@ use App\Http\Controllers\ProfileController;
 
 Route::get('/', function () {
     if (Auth::check()) {
-        return redirect()->route('dashboard');
+        return redirect()->route('home');
     }
     return view('auth.login');
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+    if (Auth::check()) {
+    return redirect()->route('home');
+    }
+    return view('auth.login');
+})->name('dashboard');
+
+Route::get('/home', HomeComp::class)->name('home');
 
 Route::get('/help', [HelpController::class, 'index'])->name('help');
 

@@ -35,6 +35,13 @@ class DatabaseSeeder extends Seeder
             ],
         ]);
 
+        DB::table('home')->insert([
+            'content' => '<h1>Welkom op onze website</h1><p>Dit is een voorbeeld van inhoud in HTML-formaat.</p>',
+            'media' => 'https://www.youtube.com/watch?v=ML20TvWphoA',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
         // Seed hoofdthemas table
         DB::table('hoofdthemas')->insert([
             [

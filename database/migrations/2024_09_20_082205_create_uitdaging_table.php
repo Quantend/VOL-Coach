@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('deelthema_id')->constrained()->onDelete('cascade');
             $table->enum('niveau', ['experimenteren', 'toepassen', 'verdiepen']);
             $table->json('opdrachten')->nullable();
+            $table->string('validatie')->nullable();
             $table->timestamps();
 
         });

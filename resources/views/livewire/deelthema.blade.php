@@ -18,6 +18,14 @@
                 <div class="mt-6">
                     <h2 class="text-2xl font-bold">Uitdaging</h2>
                     <p class="text-md font-semibold">Niveau: {{ $uitdaging->niveau }}</p>
+                    @if($uitdaging->validatie)
+                        <p>
+                            <a href="{{ Storage::disk('public')->url($uitdaging->validatie) }}"
+                               download class="text-blue-500 underline">
+                                Download Validatie pdf
+                            </a>
+                        </p>
+                    @endif
                 </div>
                 @if(!empty($opdrachten))
                     <div class="mt-6">

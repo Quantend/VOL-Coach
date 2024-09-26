@@ -7,6 +7,7 @@ use App\Filament\Resources\UitdagingResource\RelationManagers;
 use App\Models\Deelthema;
 use App\Models\Uitdaging;
 use Filament\Forms;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -39,6 +40,11 @@ class UitdagingResource extends Resource
                         'toepassen' => 'toepassen',
                         'verdiepen' => 'verdiepen',
                     ]),
+                FileUpload::make('validatie')
+                    ->label('Validatie formulier (pdf)')
+                    ->maxSize(2048)
+                    ->preserveFilenames()
+                    ->acceptedFileTypes(['application/pdf']),
                 Repeater::make('opdrachten')
                     ->schema([
                         TextInput::make('opdracht')

@@ -23,12 +23,17 @@
                     <x-input-error :messages="$errors->get('description')" class="mt-2" />
                 </div>
 
-                <div class="mt-6 text-center">
-                    <button type="submit" class="px-10 py-3 bg-gray-900 text-white rounded-md hover:bg-gray-600">
-                        {{__('Verzenden')}}
-                    </button>
-                </div>
+                <form action="{{route('help.submit')}}" method="POST">
+                    @csrf
 
+                    <div class="mt-6 text-center">
+                        <button type="submit" class="px-10 py-3 bg-gray-900 text-white rounded-md hover:bg-gray-600">
+                            {{__('Verzenden')}}
+                        </button>
+                    </div>
+                </form>
+                
+                </div>          
             </div>
         </div>
     </div>

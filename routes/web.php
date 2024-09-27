@@ -25,7 +25,8 @@ Route::get('/dashboard', function () {
 
 Route::get('/home', HomeComp::class)->name('home');
 
-Route::get('/help', [HelpController::class, 'index'])->name('help');
+    Route::get('/help', [HelpController::class, 'index'])->name('help');
+Route::post('/help', [HelpController::class, 'submit'])->name('help.submit');
 
 Route::get('/hoofdthema', HoofdthemaComp::class)->name('hoofdthema');
 

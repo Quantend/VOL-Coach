@@ -12,12 +12,14 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                maaxRegular: ['maax-regular', ...defaultTheme.fontFamily.sans],
+                maaxBold: ['maax-bold', ...defaultTheme.fontFamily.sans],
+                maaxMedium: ['maax-medium', ...defaultTheme.fontFamily.sans],
             },
         },
     },
 
     darkMode: false,
-    
+
     plugins: [forms],
 };

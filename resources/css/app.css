@@ -2,6 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+    @font-face {
+        font-family: 'maax-regular';
+        src: url('../fonts/maax-regular.woff2') format('woff2');
+    }
+    @font-face {
+        font-family: 'maax-bold';
+        src: url('../fonts/maax-bold.woff2') format('woff2');
+    }
+    @font-face {
+        font-family: 'maax-medium';
+        src: url('../fonts/maax-medium.woff2') format('woff2');
+    }
+}
+
+html {
+    font-family: 'maax-regular', sans-serif !important;
+}
+
 h1 {
     @apply text-3xl font-bold mb-4;
 }

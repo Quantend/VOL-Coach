@@ -6,7 +6,7 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center w-60">
                     <a href="{{ route('dashboard') }}">
-                        <img class="h-24 rounded-none shadow-none mb-0" src="{{asset('gilde-logo-long.svg')}}">
+                        <img class="ignore h-24" src="{{asset('gilde-logo-long.svg')}}">
                     </a>
                 </div>
 

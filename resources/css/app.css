@@ -19,22 +19,23 @@
 
 body {
     font-family: 'maax-regular', sans-serif;
+    @apply font-maaxRegular
 }
 
 h1 {
-    @apply text-3xl font-bold mb-4;
+    @apply text-3xl font-maaxBold mb-4;
 }
 
 h2 {
-    @apply text-2xl font-semibold mb-4;
+    @apply text-2xl font-maaxMedium mb-4;
 }
 
 h3 {
-    @apply text-xl font-semibold mb-4;
+    @apply text-xl font-maaxMedium mb-4;
 }
 
 h4 {
-    @apply text-lg font-semibold mb-3;
+    @apply text-lg font-maaxMedium mb-3;
 }
 
 p {

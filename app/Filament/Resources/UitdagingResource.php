@@ -8,6 +8,7 @@ use App\Models\Deelthema;
 use App\Models\Uitdaging;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -24,30 +25,37 @@ class UitdagingResource extends Resource
     protected static ?string $model = Uitdaging::class;
     protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
     protected static ?string $navigationGroup = 'Contentbeheer';
+    protected static ?string $navigationLabel = 'Uitdagingen';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Select::make('deelthema_id')
-                    ->label('Deelthema')
-                    ->options(Deelthema::all()->pluck('naam', 'id'))
-                    ->required(),
-                Select::make('niveau')
-                    ->required()
-                    ->options([
-                        'experimenteren' => 'experimenteren',
-                        'toepassen' => 'toepassen',
-                        'verdiepen' => 'verdiepen',
-                    ]),
-                FileUpload::make('validatie')
-                    ->label('Validatie formulier (pdf)')
-                    ->maxSize(2048)
-                    ->preserveFilenames()
-                    ->acceptedFileTypes(['application/pdf']),
-                Repeater::make('opdrachten')
+                Grid::make(3)
                     ->schema([
-                        TextInput::make('opdracht')
+                        Select::make('deelthema_id')
+                            ->label('Deelthema')
+                            ->options(Deelthema::all()->pluck('naam', 'id'))
+                            ->required(),
+                        Select::make('niveau')
+                            ->required()
+                            ->options([
+                                'experimenteren' => 'experimenteren',
+                                'toepassen' => 'toepassen',
+                                'verdiepen' => 'verdiepen',
+                            ]),
+                        FileUpload::make('validatie')
+                            ->label('Validatie formulier (pdf)')
+                            ->maxSize(2048)
+                            ->preserveFilenames()
+                            ->acceptedFileTypes(['application/pdf']),
+                    ]),
+                Grid::make(1)
+                    ->schema([
+                        Repeater::make('opdrachten')
+                            ->schema([
+                                TextInput::make('opdracht')
+                            ]),
                     ]),
             ]);
     }
@@ -65,6 +73,7 @@ class UitdagingResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

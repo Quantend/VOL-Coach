@@ -6,8 +6,8 @@ use App\Filament\Resources\HoofdthemaResource\Pages;
 use App\Filament\Resources\HoofdthemaResource\RelationManagers;
 use App\Models\Hoofdthema;
 use Filament\Forms;
+use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Repeater;
-use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
@@ -17,6 +17,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Mohamedsabil83\FilamentFormsTinyeditor\Components\TinyEditor;
 
 class HoofdthemaResource extends Resource
 {
@@ -33,23 +34,15 @@ class HoofdthemaResource extends Resource
                     ->maxLength(255),
                 TextInput::make('media')
                     ->label('Youtube link'),
-                Textarea::make('beschrijving'),
-                RichEditor::make('content')
-                    ->toolbarButtons([
-                        'attachFiles',
-                        'blockquote',
-                        'bold',
-                        'bulletList',
-                        'codeBlock',
-                        'h2',
-                        'h3',
-                        'italic',
-                        'link',
-                        'orderedList',
-                        'redo',
-                        'strike',
-                        'underline',
-                        'undo',
+                Grid::make(1)
+                    ->schema([
+                        Textarea::make('beschrijving'),
+                    ]),
+                Grid::make(1)
+                    ->schema([
+                        TinyEditor::make('content')
+                            ->profile('custom')
+                            ->required(),
                     ]),
             ]);
     }
@@ -59,7 +52,16 @@ class HoofdthemaResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('naam'),
-                TextColumn::make('created_at')->label('Created'),
+                TextColumn::make('created_at')->label('Created')
+            ])
+            ->actions([
+                Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
+            ])
+            ->bulkActions([
+                Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\DeleteBulkAction::make(),
+                ]),
             ]);
     }
 

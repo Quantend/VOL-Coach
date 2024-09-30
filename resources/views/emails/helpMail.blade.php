@@ -8,8 +8,8 @@
 <body>
 <h1>Vraag</h1>
 <p>Er is een vraag binnengekomen.</p>
-<p><strong>Naam:</strong>{{$details['name']}}</p>
-<p><strong>email:</strong>{{$details['email']}}</p>
-<p><strong>Vraag/beschrijving:</strong>{{$details['description']}}</p>    
+<p><strong>Naam:</strong> {{$details['name']}}</p>
+<p><strong>email:</strong> {{$details['email']}}</p>
+<p><strong>Vraag/beschrijving:</strong> {{$details['description']}}</p>    
 </body>
 </html>

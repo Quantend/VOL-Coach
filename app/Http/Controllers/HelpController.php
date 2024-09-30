@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\HelpMail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
 class HelpController extends Controller
@@ -15,15 +16,16 @@ class HelpController extends Controller
 
     public function submit(Request $request)
     {
+
+        $user = Auth::user();
+
         $request->validate([
-            'name' => 'required',
-            'email' => 'required|email',
             'description' => 'required',
         ]);
 
         $details = [
-            'name' => $request->name,
-            'email' => $request->email,
+            'name' => $user->name,
+            'email' => $user->email,
             'description' => $request->description,
         ];
 

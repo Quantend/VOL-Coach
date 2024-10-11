@@ -7,35 +7,65 @@
             </button>
             <div class="flex justify-center my-2">
                 @if(!empty($videoId))
-                <iframe height="400" width="600" controls src="https://www.youtube.com/embed/{{ $videoId }}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <iframe height="400" width="600" controls src="https://www.youtube.com/embed/{{ $videoId }}"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen></iframe>
                 @endif
             </div>
             <div>
-            {!! $deelthema->content !!}
+                {!! $deelthema->content !!}
             </div>
 
-            @if($uitdaging)
-                <div class="mt-6">
-                    <h2 class="text-2xl font-bold">Uitdaging</h2>
-                    <p class="text-md font-semibold">Niveau: {{ $uitdaging->niveau }}</p>
-                    @if($uitdaging->validatie)
-                        <p>
-                            <a href="{{ Storage::disk('public')->url($uitdaging->validatie) }}"
-                               download class="text-blue-500 underline">
-                                Download Validatie pdf
-                            </a>
-                        </p>
-                    @endif
+            @if($hideUitdagingen)
+                <div class="flex justify-center">
+                <button wire:click="toggleUitdagingen " class="text-blue-500 underline">Toon Uitdagingen</button>
                 </div>
-                @if(!empty($opdrachten))
-                    <div class="mt-6">
-                        <h2 class="text-2xl font-bold">Opdrachten</h2>
-                        <ul class="list-disc pl-5">
-                            @foreach($opdrachten as $opdracht)
-                                <li>{{ $opdracht['opdracht'] }}</li>
-                            @endforeach
-                        </ul>
+            @else
+                @if($uitdaging)
+                    <div class="flex justify-center">
+                        <button wire:click="toggleUitdagingen " class="text-blue-500 underline">Verberg Uitdagingen</button>
                     </div>
+                    <div class="mt-6">
+                        <h2 class="text-2xl font-bold">Uitdaging</h2>
+                        <p class="text-md font-semibold">Niveau: {{ $uitdaging->niveau }}</p>
+                        @if($uitdaging->validatie)
+                            <p>
+                                <a href="{{ Storage::disk('public')->url($uitdaging->validatie) }}"
+                                   download class="text-blue-500 underline">
+                                    Download Validatie pdf
+                                </a>
+                            </p>
+                            <div>
+                                <form wire:submit.prevent="uploadPdf">
+                                    <div>
+                                        <label for="pdfFile">Upload PDF</label>
+                                        <input type="file" wire:model="pdfFile" accept="application/pdf">
+
+                                        @error('pdfFile') <span class="error">{{ $message }}</span> @enderror
+                                    </div>
+
+                                    <button type="submit">Submit</button>
+                                </form>
+
+                                <!-- Display success message -->
+                                @if (session()->has('message'))
+                                    <div style="color: green;">
+                                        {{ session('message') }}
+                                    </div>
+                                @endif
+                            </div>
+                        @endif
+                    </div>
+                    @if(!empty($opdrachten))
+                        <div class="mt-6">
+                            <h2 class="text-2xl font-bold">Opdrachten</h2>
+                            <ul class="list-disc pl-5">
+                                @foreach($opdrachten as $opdracht)
+                                    <li>{{ $opdracht['opdracht'] }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                 @endif
             @endif
         </div>

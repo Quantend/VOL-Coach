@@ -17,6 +17,19 @@
     }
 }
 
+.theme-button{
+    color: #00365e;
+    background-color: white;
+    border-radius: 5px;
+    font-family: 'maax-bold', sans-serif;
+    display: inline-block;
+    padding: 10px 15px;
+    transition: 0.1s ease-in;
+}
+.theme-button:hover{
+    scale: 1.04;
+}
+
 body {
     font-family: 'maax-regular', sans-serif;
     @apply font-maaxRegular

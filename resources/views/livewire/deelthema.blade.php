@@ -20,27 +20,28 @@
             @if($uitdaging)
                 @if($hideUitdagingen)
                     <div class="flex justify-center">
-                        <button wire:click="toggleUitdagingen " class="text-blue-500 underline">Toon Uitdagingen
-                        </button>
+                        <button wire:click="toggleUitdagingen" class="text-blue-500 underline">Toon Uitdagingen</button>
                     </div>
                 @else
                     <div class="flex justify-center">
-                        <button wire:click="toggleUitdagingen " class="text-blue-500 underline">Verberg Uitdagingen
-                        </button>
+                        <button wire:click="toggleUitdagingen" class="text-blue-500 underline">Verberg Uitdagingen</button>
                     </div>
                     <div class="mt-6">
                         <h2 class="text-2xl font-bold">Uitdaging</h2>
                         <p class="text-md font-semibold">Niveau: {{ $uitdaging->niveau }}</p>
-                        <p>
-                            <a href="{{ Storage::disk('public')->url($uitdaging->validatie) }}"
-                               download class="text-blue-500 underline">
-                                Download Validatie pdf
-                            </a>
-                        </p>
+
                         @if($uitdaging->validatie)
+                            <p>
+                                <a href="{{ Storage::disk('public')->url($uitdaging->validatie) }}" download class="text-blue-500 underline">
+                                    Download Validatie pdf
+                                </a>
+                            </p>
+
                             @if($hasValidatie)
                                 <p class="text-green-500">Validatie is verstuurd.</p>
-                                <button wire:click="toggleHasValidatie" class="text-blue-500 underline cursor-pointer">Verstuur nieuwe validatie.</button>
+                                <button wire:click="toggleHasValidatie" class="text-blue-500 underline cursor-pointer">
+                                    Verstuur nieuwe validatie.
+                                </button>
                                 <p class="text-red-500 text-xs">*Oude validatie wordt verwijdert*</p>
                             @else
                                 <div>
@@ -61,13 +62,13 @@
                                             {{ session('message') }}
                                         </div>
                                     @endif
-                                    @endif
-                                    @else
-                                        <p class="text-md font-semibold">Nog geen validatie beschikbaar voor dit
-                                            deelthema.</p>
                                 </div>
                             @endif
+                        @else
+                            <p class="text-md font-semibold">Nog geen validatie beschikbaar voor dit deelthema.</p>
+                        @endif
                     </div>
+
                     @if(!empty($opdrachten))
                         <div class="mt-6">
                             <h2 class="text-2xl font-bold">Opdrachten</h2>

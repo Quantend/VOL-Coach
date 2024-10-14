@@ -122,8 +122,6 @@ class ZelftoetsComp extends Component
     }
 
 
-
-
     public function render()
     {
         return view('livewire.zelftoets', [

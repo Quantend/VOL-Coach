@@ -10,7 +10,7 @@
                     @csrf
 
                     <div class="mt-8">
-                        <textarea id="description" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm resize-none" rows="6" name="description" placeholder="Vraag/Beschrijving" required>{{ old('description') }}</textarea>
+                        <textarea id="description" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm resize-none" rows="7" name="description" placeholder="Vraag/Beschrijving" required>{{ old('description') }}</textarea>
                         <x-input-error :messages="$errors->get('description')" class="mt-2" />
                     </div>
 
@@ -20,7 +20,11 @@
                         </button>
                     </div>
                 </form>
-
+                @if (session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+                @endif            
             </div>          
         </div>
     </div>

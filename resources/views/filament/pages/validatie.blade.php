@@ -84,6 +84,7 @@
                     <div style="background-color: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
                         <h2 style="font-size: 1.25rem; font-weight: bold;">Bevestig Upgrade</h2>
                         <p>Weet je zeker dat je het niveau wilt upgraden?</p>
+                        <p>(Deze actie verwijdert het huidige beantwoorde validatie bestand)</p>
                         <div style="margin-top: 16px; display: flex; justify-content: flex-end;">
                             <button wire:click="cancelUpgrade"
                                     style="background-color: gray; color: white; padding: 8px 16px; border-radius: 4px; margin-right: 8px; border: none; cursor: pointer;">

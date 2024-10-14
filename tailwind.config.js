@@ -23,7 +23,7 @@ export default {
                     200: '#f07a9b',  // Medium pink
                     300: '#f00069',  // Hover (keeping as is)
                     400: '#dd0069',  // Default (keeping as is)
-                    500: '#b9005f',  // Darker pink   
+                    500: '#b9005f',  // Darker pink
                     600: '#9b0055',  // Deep pink
                     700: '#730041',  // Darker tone
                 },

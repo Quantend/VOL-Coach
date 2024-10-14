@@ -19,6 +19,7 @@ class DeelthemaComp extends Component
     public $opdrachten = [];
     public $hideUitdagingen = true;
     public $pdfFile;
+    public $hasValidatie;
 
     protected $rules = [
         'pdfFile' => 'required|mimes:pdf|max:2048', // max 2MB
@@ -37,6 +38,11 @@ class DeelthemaComp extends Component
             $this->uitdaging = Uitdaging::find($zelftoets->uitdaging_id);
             $this->opdrachten = $this->uitdaging->opdrachten;
         }
+
+        $this->hasValidatie = Validatie::where('deelthema_id', $this->deelthema->id)
+            ->where('user_id', auth()->id())
+            ->whereNotNull('validatie_antwoord')  // Check if there is a PDF file
+            ->exists();
     }
 
     public function extractVideoId($url)
@@ -70,39 +76,40 @@ class DeelthemaComp extends Component
 
     public function uploadPdf()
     {
-        // Valideer het PDF-bestand
+        // Validate the PDF file
         $this->validate();
 
-        // Sla het bestand op met een unieke naam
+        // Save the PDF file with a unique name
         $pdfName = time() . '_' . $this->pdfFile->getClientOriginalName();
-        $path = $this->pdfFile->storeAs('pdfs', $pdfName, 'public'); // Sla de PDF op in de 'pdfs' map binnen de publieke opslag
+        $path = $this->pdfFile->storeAs('pdfs', $pdfName, 'public'); // Save the PDF in the 'pdfs' folder within public storage
 
-        // Vind of maak een Validatie-record voor de huidige gebruiker en het huidige deelthema
+        // Find or create a Validatie record for the current user and deelthema
         $validatie = Validatie::firstOrCreate(
             [
-                'deelthema_id' => $this->deelthema->id,  // De `deelthema_id` moet overeenkomen met het huidige deelthema
-                'user_id' => auth()->id(),               // De `user_id` moet overeenkomen met de ingelogde gebruiker
+                'deelthema_id' => $this->deelthema->id,  // Matching deelthema_id
+                'user_id' => auth()->id(),               // Matching user_id
             ],
             [
-                'uitdaging_id' => $this->uitdaging ? $this->uitdaging->id : null,  // Optioneel: als er een uitdaging is, sla het op
-                'validatie_antwoord' => $path,           // Het PDF-pad wordt opgeslagen in het veld `validatie_antwoord`
+                'uitdaging_id' => $this->uitdaging ? $this->uitdaging->id : null,  // Optionally save uitdaging_id if exists
+                'validatie_antwoord' => $path,           // Save the uploaded PDF path in validatie_antwoord
             ]
         );
 
-        // Als de validatie al bestaat, werk dan het antwoord bij
+        // If validation already exists, update the PDF file
         if (!$validatie->wasRecentlyCreated) {
             $validatie->validatie_antwoord = $path;
             $validatie->save();
         }
 
-        // Toon een succesmelding aan de gebruiker
-        session()->flash('message', 'PDF succesvol geüpload!');
+        // Set hasValidatie to true because the user has uploaded a file
+        $this->hasValidatie = true;
 
-        // Reset de file input
+        // Show a success message to the user
+        session()->flash('message', 'PDF successfully uploaded!');
+
+        // Reset the file input
         $this->reset('pdfFile');
     }
-
-
 
     public function render()
     {
@@ -117,5 +124,10 @@ class DeelthemaComp extends Component
     public function toggleUitdagingen()
     {
         $this->hideUitdagingen = !$this->hideUitdagingen;
+    }
+
+    public function toggleHasValidatie()
+    {
+        $this->hasValidatie = !$this->hasValidatie;
     }
 }

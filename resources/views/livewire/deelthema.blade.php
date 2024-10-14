@@ -16,45 +16,57 @@
                 {!! $deelthema->content !!}
             </div>
 
-            @if($hideUitdagingen)
-                <div class="flex justify-center">
-                <button wire:click="toggleUitdagingen " class="text-blue-500 underline">Toon Uitdagingen</button>
-                </div>
-            @else
-                @if($uitdaging)
+
+            @if($uitdaging)
+                @if($hideUitdagingen)
                     <div class="flex justify-center">
-                        <button wire:click="toggleUitdagingen " class="text-blue-500 underline">Verberg Uitdagingen</button>
+                        <button wire:click="toggleUitdagingen " class="text-blue-500 underline">Toon Uitdagingen
+                        </button>
+                    </div>
+                @else
+                    <div class="flex justify-center">
+                        <button wire:click="toggleUitdagingen " class="text-blue-500 underline">Verberg Uitdagingen
+                        </button>
                     </div>
                     <div class="mt-6">
                         <h2 class="text-2xl font-bold">Uitdaging</h2>
                         <p class="text-md font-semibold">Niveau: {{ $uitdaging->niveau }}</p>
+                        <p>
+                            <a href="{{ Storage::disk('public')->url($uitdaging->validatie) }}"
+                               download class="text-blue-500 underline">
+                                Download Validatie pdf
+                            </a>
+                        </p>
                         @if($uitdaging->validatie)
-                            <p>
-                                <a href="{{ Storage::disk('public')->url($uitdaging->validatie) }}"
-                                   download class="text-blue-500 underline">
-                                    Download Validatie pdf
-                                </a>
-                            </p>
-                            <div>
-                                <form wire:submit.prevent="uploadPdf">
-                                    <div>
-                                        <label for="pdfFile">Upload PDF</label>
-                                        <input type="file" wire:model="pdfFile" accept="application/pdf">
+                            @if($hasValidatie)
+                                <p class="text-green-500">Validatie is verstuurd.</p>
+                                <button wire:click="toggleHasValidatie" class="text-blue-500 underline cursor-pointer">Verstuur nieuwe validatie.</button>
+                                <p class="text-red-500 text-xs">*Oude validatie wordt verwijdert*</p>
+                            @else
+                                <div>
+                                    <form wire:submit.prevent="uploadPdf">
+                                        <div>
+                                            <label for="pdfFile">Upload PDF</label>
+                                            <input type="file" wire:model="pdfFile" accept="application/pdf">
 
-                                        @error('pdfFile') <span class="error">{{ $message }}</span> @enderror
-                                    </div>
+                                            @error('pdfFile') <span class="error">{{ $message }}</span> @enderror
+                                        </div>
 
-                                    <button type="submit">Submit</button>
-                                </form>
+                                        <button type="submit" class="underline text-blue-500">Submit</button>
+                                    </form>
 
-                                <!-- Display success message -->
-                                @if (session()->has('message'))
-                                    <div style="color: green;">
-                                        {{ session('message') }}
-                                    </div>
-                                @endif
-                            </div>
-                        @endif
+                                    <!-- Display success message -->
+                                    @if (session()->has('message'))
+                                        <div style="color: green;">
+                                            {{ session('message') }}
+                                        </div>
+                                    @endif
+                                    @endif
+                                    @else
+                                        <p class="text-md font-semibold">Nog geen validatie beschikbaar voor dit
+                                            deelthema.</p>
+                                </div>
+                            @endif
                     </div>
                     @if(!empty($opdrachten))
                         <div class="mt-6">
@@ -67,6 +79,8 @@
                         </div>
                     @endif
                 @endif
+            @else
+                <p class="flex justify-center mt-10">Geen uitdagingen beschikbaar</p>
             @endif
         </div>
     </div>

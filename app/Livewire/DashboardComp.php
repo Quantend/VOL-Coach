@@ -5,17 +5,29 @@ namespace App\Livewire;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use App\Models\Zelftoets;
+use App\Models\Validatie;
 
 class DashboardComp extends Component
 {
     public $zelftoets;
     public $deelthemaId;
+    public $validatie;
 
     public function mount()
     {
         $this->zelftoets = Zelftoets::with(['hoofdthema', 'deelthema', 'uitdaging'])
             ->where('user_id', Auth::id())
             ->get();
+
+        if ($this->zelftoets->isNotEmpty()) {
+            $uitdagingIds = $this->zelftoets->pluck('uitdaging_id')->unique();
+
+            // Fetch Validatie records that match the user and the eerste uitdaging_id
+            $this->validatie = Validatie::where('user_id', Auth::id())
+                ->whereIn('uitdaging_id', $uitdagingIds)
+                ->where('voltooid', true)
+                ->get();
+        }
     }
 
     public function toDeelthema($id)

@@ -5,7 +5,7 @@
 
     <div class="flex justify-center mt-20">
         @if($zelftoets->isEmpty())
-            <p>No records found.</p>
+            <p>Geen stuff gevonden</p>
         @else
 
             <table class="">
@@ -22,10 +22,19 @@
                     <tr>
                         <td>{{ $toets->hoofdthema->naam ?? 'N/A' }}</td>
                         <td>{{ $toets->deelthema->naam ?? 'N/A' }}</td>
-                        <td>{{ $toets->uitdaging->niveau ?? 'N/A' }}</td>
-                        <td><button wire:click="toDeelthema({{ $toets->deelthema->id }})">
+                        <td>
+                            @if($validatie->where('uitdaging_id', $toets->uitdaging_id)->isNotEmpty())
+                                Voltooid
+                            @else
+                                {{ $toets->uitdaging->niveau ?? 'N/A' }}
+                            @endif
+                        </td>
+                        <td>
+                            <button wire:click="toDeelthema({{ $toets->deelthema->id }})">
                                 Button naar deelthema
-                            </button></td>
+                            </button>
+                        </td>
+
                     </tr>
                 @endforeach
                 </tbody>

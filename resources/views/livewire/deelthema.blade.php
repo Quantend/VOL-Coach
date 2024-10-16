@@ -16,8 +16,9 @@
                 {!! $deelthema->content !!}
             </div>
 
-
-            @if($uitdaging)
+            @if ($uitdagingVoltooid === true)
+                <p class="flex justify-center mt-10 text-green-500">Uitdaging voltooid</p>
+            @elseif($uitdaging)
                 @if($hideUitdagingen)
                     <div class="flex justify-center">
                         <button wire:click="toggleUitdagingen" class="text-blue-500 underline">Toon Uitdagingen</button>

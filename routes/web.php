@@ -4,6 +4,7 @@ use App\Livewire\DeelthemaComp;
 use App\Livewire\ZelftoetsComp;
 use App\Livewire\HoofdthemaComp;
 use App\Livewire\HomeComp;
+use App\Livewire\DashboardComp;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HelpController;
@@ -16,12 +17,6 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::get('/dashboard', function () {
-    if (Auth::check()) {
-    return redirect()->route('home');
-    }
-    return view('auth.login');
-})->name('dashboard');
 
 Route::get('/home', HomeComp::class)->name('home');
 
@@ -33,6 +28,8 @@ Route::get('/hoofdthema', HoofdthemaComp::class)->name('hoofdthema');
 Route::get('/deelthema/{id}', DeelthemaComp::class)->name('deelthema');
 
 Route::get('/zelftoets/{hoofdthema}', ZelftoetsComp::class)->name('zelftoets');
+
+Route::get('/dashboard', DashboardComp::class)->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

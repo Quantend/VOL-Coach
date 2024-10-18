@@ -31,7 +31,6 @@ class HelpController extends Controller
 
 
         $admin = [
-            'bram.wilbers@student.gildeopleidingen.nl',
             'developer@vol-coach.gildedevops.it',
         ];
 

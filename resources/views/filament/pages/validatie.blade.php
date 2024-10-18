@@ -1,8 +1,17 @@
-{{--IMPORTANT, SOME TAILWIND CSS DOESN'T WORK LIKE COLORS AND STUFF--}}
+{{--IMPORTANT, SOME TAILWIND CSS DOESN'T WORK LIKE COLORS AND STUFF (no time to fix ¯\_(ツ)_/¯ )--}}
 <x-filament-panels::page>
     <div>
         <div class="flex justify-center mb-4">
-        <button wire:click="toggleVoltooid" class="flex justify-center">Toon voltooide uitdagingen</button>
+
+            <button wire:click="toggleVoltooid" class="flex justify-center"
+                    style="background-color: blue; color: white; padding: 8px 16px; border-radius: 4px; margin-right: 8px; border: none; cursor: pointer;">
+                @if ($showVoltooid)
+                    Verberg voltooide uitdagingen
+                @else
+                    Toon voltooide uitdagingen
+                @endif
+            </button>
+
         </div>
         <div class="justify-center flex space-y-6">
             <table class="min-w-full bg-white border border-gray-200">
@@ -17,51 +26,51 @@
                     <th class="px-4 py-2">Verwijder</th>
                 </tr>
                 </thead>
-                    <tbody>
-                    @foreach ($validaties as $validatie)
-                        @if($showVoltooid || !$validatie->voltooid)
-                            <tr>
-                                <td class="border px-4 py-2">{{ $validatie->user->name ?? 'Unknown' }}</td>
-                                <td class="border px-4 py-2">{{ $validatie->deelthema->hoofdthema->naam ?? 'Unknown' }}</td>
-                                <td class="border px-4 py-2">{{ $validatie->deelthema->naam ?? 'Unknown' }}</td>
-                                <td class="border px-4 py-2">{{ $validatie->uitdaging->niveau ?? 'Unknown' }}</td>
-                                <td class="border px-4 py-2">
-                                    @if($validatie->voltooid === 1)
-                                        Voltooid
-                                    @elseif($validatie->uitdaging->niveau === 'experimenteren')
-                                        <button wire:click="confirmUpgrade({{ $validatie->id }})" style="color: blue;"
-                                                class="underline">Upgrade naar toepassen
-                                        </button>
-                                    @elseif($validatie->uitdaging->niveau === 'toepassen')
-                                        <button wire:click="confirmUpgrade({{ $validatie->id }})" style="color: blue;"
-                                                class="underline">Upgrade naar verdiepen
-                                        </button>
-                                    @elseif($validatie->uitdaging->niveau === 'verdiepen')
-                                        <button wire:click="confirmUpgrade({{ $validatie->id }})" style="color: blue;"
-                                                class="underline">Upgrade naar voltooid
-                                        </button>
-                                    @else
-                                        Something went wrong
-                                    @endif
-                                </td>
-                                <td class="border px-4 py-2">
-                                    @if($validatie->validatie_antwoord !== null)
-                                        <button wire:click="downloadPDF({{ $validatie->id }})" style="color: blue;"
-                                                class="underline">Download PDF
-                                        </button>
-                                    @else
-                                        Geen validatie beschikbaar
-                                    @endif
-                                </td>
-                                <td class="border px-4 py-2">
-                                    <button wire:click="confirmDelete({{ $validatie->id }})" style="color: red;"
-                                            class="underline">Verwijder PDF
+                <tbody>
+                @foreach ($validaties as $validatie)
+                    @if($showVoltooid || !$validatie->voltooid)
+                        <tr>
+                            <td class="border px-4 py-2">{{ $validatie->user->name ?? 'Unknown' }}</td>
+                            <td class="border px-4 py-2">{{ $validatie->deelthema->hoofdthema->naam ?? 'Unknown' }}</td>
+                            <td class="border px-4 py-2">{{ $validatie->deelthema->naam ?? 'Unknown' }}</td>
+                            <td class="border px-4 py-2">{{ $validatie->uitdaging->niveau ?? 'Unknown' }}</td>
+                            <td class="border px-4 py-2">
+                                @if($validatie->voltooid === 1)
+                                    Voltooid
+                                @elseif($validatie->uitdaging->niveau === 'experimenteren')
+                                    <button wire:click="confirmUpgrade({{ $validatie->id }})" style="color: blue;"
+                                            class="underline">Upgrade naar toepassen
                                     </button>
-                                </td>
-                            </tr>
-                        @endif
-                    @endforeach
-                    </tbody>
+                                @elseif($validatie->uitdaging->niveau === 'toepassen')
+                                    <button wire:click="confirmUpgrade({{ $validatie->id }})" style="color: blue;"
+                                            class="underline">Upgrade naar verdiepen
+                                    </button>
+                                @elseif($validatie->uitdaging->niveau === 'verdiepen')
+                                    <button wire:click="confirmUpgrade({{ $validatie->id }})" style="color: blue;"
+                                            class="underline">Upgrade naar voltooid
+                                    </button>
+                                @else
+                                    Something went wrong
+                                @endif
+                            </td>
+                            <td class="border px-4 py-2">
+                                @if($validatie->validatie_antwoord !== null)
+                                    <button wire:click="downloadPDF({{ $validatie->id }})" style="color: blue;"
+                                            class="underline">Download PDF
+                                    </button>
+                                @else
+                                    Geen validatie beschikbaar
+                                @endif
+                            </td>
+                            <td class="border px-4 py-2">
+                                <button wire:click="confirmDelete({{ $validatie->id }})" style="color: red;"
+                                        class="underline">Verwijder PDF
+                                </button>
+                            </td>
+                        </tr>
+                    @endif
+                @endforeach
+                </tbody>
             </table>
         </div>
         @if ($confirmingDeletion)

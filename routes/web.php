@@ -16,7 +16,7 @@ Route::get('/', function () {
     }
     return view('auth.login');
 });
-
+Route::middleware('auth')->group(function () {
 
 Route::get('/home', HomeComp::class)->name('home');
 
@@ -24,17 +24,13 @@ Route::get('/help', [HelpController::class, 'index'])->name('help');
 Route::post('/help', [HelpController::class, 'submit'])->name('help.submit');
 
 Route::get('/hoofdthema', HoofdthemaComp::class)->name('hoofdthema');
-
 Route::get('/deelthema/{id}', DeelthemaComp::class)->name('deelthema');
-
 Route::get('/zelftoets/{hoofdthema}', ZelftoetsComp::class)->name('zelftoets');
-
 Route::get('/dashboard', DashboardComp::class)->name('dashboard');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 require __DIR__.'/auth.php';

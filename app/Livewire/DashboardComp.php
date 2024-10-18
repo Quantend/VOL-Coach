@@ -12,6 +12,7 @@ class DashboardComp extends Component
     public $zelftoets;
     public $deelthemaId;
     public $validatie;
+    public $showVoltooid = true;
 
     public function mount()
     {
@@ -44,5 +45,10 @@ class DashboardComp extends Component
         }
         return view('livewire.dashboard')->layout('layouts.app');
 
+    }
+
+    public function toggleVoltooid()
+    {
+        $this->showVoltooid = !$this->showVoltooid;
     }
 }

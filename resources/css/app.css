@@ -18,16 +18,18 @@
 }
 
 .theme-button{
-    color: #00365e;
-    background-color: white;
+    color: #ffff;
+    background-color: #00365e;
     border-radius: 5px;
     font-family: 'maax-bold', sans-serif;
     display: inline-block;
     padding: 10px 15px;
+    border: 2px solid #00365e;
     transition: 0.1s ease-in;
 }
 .theme-button:hover{
-    scale: 1.04;
+    color: #00365e;
+    background-color: #ffffff00;
 }
 
 body {

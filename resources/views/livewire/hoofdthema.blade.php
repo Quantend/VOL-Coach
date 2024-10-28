@@ -5,7 +5,7 @@
                 <h1 class="text-3xl">Hoofdthema's</h1>
                 <ul class="grid grid-cols-3 gap-4 p-0">
                     @foreach($hoofdthemas as $hoofdthema)
-                        <div class="p-4 hover:cursor-pointer hover:scale-105 transition-all shadow bg-white rounded-md" wire:click="selectHoofdthema({{ $hoofdthema->id }})">
+                        <div class="p-4 hover:cursor-pointer hover:scale-105 transition-all shadow bg-white rounded-br-md rounded-tl-md" wire:click="selectHoofdthema({{ $hoofdthema->id }})">
                             <p class="text-pink-400">{{ $hoofdthema->naam }}</p>
                             <p class="text-gray-700">{{ $hoofdthema->beschrijving }}</p>
                         </div>

@@ -33,7 +33,7 @@
 
                         @if($uitdaging->validatie)
                             <p>
-                                <a href="{{ Storage::disk('public')->url($uitdaging->validatie) }}" download class="text-blue-500 underline">
+                                <a href="{{ asset('storage/' . $uitdaging->validatie) }}" download class="text-blue-500 underline">
                                     Download Validatie pdf
                                 </a>
                             </p>

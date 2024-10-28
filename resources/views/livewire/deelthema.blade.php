@@ -25,7 +25,7 @@
                     </div>
                 @else
                     <div class="flex justify-center">
-                        <button wire:click="toggleUitdagingen" class="text-blue-500 underline">Verberg Uitdagingen</button>
+                        <button wire:click="toggleUitdagingen" class="mt-6 cursor-pointer theme-button">Verberg Uitdagingen</button>
                     </div>
                     <div class="mt-6">
                         <h2 class="text-2xl font-bold">Uitdaging</h2>

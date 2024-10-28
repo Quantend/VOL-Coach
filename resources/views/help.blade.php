@@ -14,8 +14,8 @@
                         <x-input-error :messages="$errors->get('description')" class="mt-2" />
                     </div>
 
-                    <div class="mt-6 text-center cursor-pointer theme-button">
-                        <button type="submit">
+                    <div class="mt-6 text-center">
+                        <button type="submit" class="cursor-pointer theme-button">
                             {{__('Verzenden')}}
                         </button>
                     </div>

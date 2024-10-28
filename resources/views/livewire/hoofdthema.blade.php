@@ -14,17 +14,21 @@
             @endif
 
             @if($selectedHoofdthema)
-                <h2 class="text-3xl">{{ $selectedHoofdthema->naam }}</h2>
-                <div class="text-red-500 hover:cursor-pointer theme-button" wire:click="backToHoofdthemaList">Terug naar hoofdthema's</div>
+                <div class="mt-8">
+                    <h2 class="text-4xl">{{ $selectedHoofdthema->naam }}</h2>
+                    <div class="text-pink-500 font-medium mt-4 cursor-pointer hover:text-pink-700 transition-colors" wire:click="backToHoofdthemaList">Terug naar hoofdthema's</div>
                     @if(!empty($videoId))
-                        <div class="flex justify-center my-2 my-10">
-                            <iframe height="400" width="600" controls src="https://www.youtube.com/embed/{{ $videoId }}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <div class="flex justify-center my-10">
+                            <iframe height="400" width="100%" class="rounded-lg shadow-md" src="https://www.youtube.com/embed/{{ $videoId }}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                         </div>
                     @endif
-                    <div>
+                    <div class="">
                         {!! $selectedHoofdthema->content !!}
                     </div>
-                <div class="text-blue-500 hover:cursor-pointer theme-button" wire:click="startZelfscoreToets">Zelfscore toets</div>
+                </div>
+                <div class="mt-6 cursor-pointer theme-button" wire:click="startZelfscoreToets">
+                    Start Zelfscore Toets
+                </div>
             @endif
         </div>
     </div>

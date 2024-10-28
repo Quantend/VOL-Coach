@@ -53,6 +53,12 @@
                     </x-slot>
 
                     <x-slot name="content">
+                        @if (Auth::user()->is_admin === 1)
+                            <x-dropdown-link :href="url('/admin')" class="no-underline">
+                                {{ __('Admin page') }}
+                            </x-dropdown-link>
+                        @endif
+
                         <x-dropdown-link :href="route('profile.edit')" class="no-underline">
                             {{ __('Profile') }}
                         </x-dropdown-link>
@@ -86,28 +92,28 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('home')" :active="request()->routeIs('home')">
+            <x-responsive-nav-link :href="route('home')" :active="request()->routeIs('home')" class="no-underline">
                 {{ __('Home') }}
             </x-responsive-nav-link>
         </div>
 
         <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
             <div class="pt-2 pb-3 space-y-1">
-                <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" class="no-underline">
                     {{ __('Dashboard') }}
                 </x-responsive-nav-link>
             </div>
 
         <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
             <div class="pt-2 pb-3 space-y-1">
-                <x-responsive-nav-link :href="route('hoofdthema')" :active="request()->routeIs('hoofdthema')">
+                <x-responsive-nav-link :href="route('hoofdthema')" :active="request()->routeIs('hoofdthema')" class="no-underline">
                     {{ __('Hoofdthema') }}
                 </x-responsive-nav-link>
             </div>
 
         <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
             <div class="pt-2 pb-3 space-y-1">
-                <x-responsive-nav-link :href="route('help')" :active="request()->routeIs('help')">
+                <x-responsive-nav-link :href="route('help')" :active="request()->routeIs('help')" class="no-underline">
                     {{ __('Help') }}
                 </x-responsive-nav-link>
             </div>
@@ -121,15 +127,21 @@
             </div>
 
             <div class="mt-3 space-y-1">
-                <x-responsive-nav-link :href="route('profile.edit')">
+                @if (Auth::user()->is_admin === 1)
+                    <x-responsive-nav-link :href="url('/admin')" class="no-underline">
+                        {{ __('Admin page') }}
+                    </x-responsive-nav-link>
+                @endif
+
+                <x-responsive-nav-link :href="route('profile.edit')" class="no-underline">
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
 
                 <!-- Authentication -->
-                <form method="POST" action="{{ route('logout') }}">
+                <form method="POST" action="{{ route('logout') }}" class="no-underline">
                     @csrf
 
-                    <x-responsive-nav-link :href="route('logout')"
+                    <x-responsive-nav-link :href="route('logout')" class="no-underline"
                             onclick="event.preventDefault();
                                         this.closest('form').submit();">
                         {{ __('Log Out') }}

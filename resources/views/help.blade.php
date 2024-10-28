@@ -15,7 +15,7 @@
                     </div>
 
                     <div class="mt-6 text-center">
-                        <button type="submit" class="px-10 py-3 bg-gray-900 text-white rounded-md hover:bg-gray-600">
+                        <button type="submit" class="cursor-pointer theme-button">
                             {{__('Verzenden')}}
                         </button>
                     </div>
@@ -24,8 +24,8 @@
                 <div class="alert alert-success">
                     {{ session('success') }}
                 </div>
-                @endif            
-            </div>          
+                @endif
+            </div>
         </div>
     </div>
 </x-app-layout>

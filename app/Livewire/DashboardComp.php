@@ -12,7 +12,7 @@ class DashboardComp extends Component
     public $zelftoets;
     public $deelthemaId;
     public $validatie;
-    public $showVoltooid = true;
+    public $showVoltooid = false;
 
     public function mount()
     {

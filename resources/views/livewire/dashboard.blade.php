@@ -15,7 +15,7 @@
                 <button wire:click="toggleVoltooid"
                         class="my-4 px-3 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
                     @if ($showVoltooid)
-                        Verberg voltooide uitdagingen
+                        Toon onvoltooide uitdagingen
                     @else
                         Toon voltooide uitdagingen
                     @endif
@@ -30,12 +30,16 @@
                         <th class="p-4 border border-black text-pink-400 text-xl">Deelthema</th>
                         <th class="p-4 border border-black text-pink-400 text-xl">Niveau</th>
                         <th class="p-4 border border-black text-pink-400 text-xl">Status</th>
+                        @if($showVoltooid)
+                            <th class="p-4 border border-black text-pink-400 text-xl">Feedback</th>
+                        @endif
                         <th class="p-4 border border-black text-pink-400 text-xl rounded-tl-2xr">Link</th>
                     </tr>
                     </thead>
                     <tbody>
                     @if($showVoltooid)
                         @foreach($zelftoets as $toets)
+                            @if($validatie->where('uitdaging_id', $toets->uitdaging_id)->where('voltooid', true)->isNotEmpty())
                             <tr>
 
                                 <td class="p-4 border border-black text-center">{{ $toets->hoofdthema->naam ?? 'N/A' }}</td>
@@ -50,6 +54,7 @@
                                         <div class="">Nog niet voltooid</div>
                                     @endif
                                 </td>
+                                <td class="p-4 border border-black text-center">{{ $validatie->where('uitdaging_id', $toets->uitdaging_id  )->where('feedback')->first()->feedback ?? 'N/A' }}</td>
                                 <td class="p-4 border border-black text-center">
                                     <button wire:click="toDeelthema({{ $toets->deelthema->id }})"
                                             class="text-blue-600 underline cursor-pointer hover:text-blue-800">
@@ -57,10 +62,11 @@
                                     </button>
                                 </td>
                             </tr>
+                            @endif
                         @endforeach
                     @else
                         @foreach($zelftoets as $toets)
-                            @if(!$validatie->where('uitdaging_id', $toets->uitdaging_id)->where('voltooid', true)->isNotEmpty())
+                            @if($validatie->where('uitdaging_id', $toets->uitdaging_id)->where('voltooid', false)->isNotEmpty() || !$validatie->where('uitdaging_id', $toets->uitdaging_id)->where('voltooid', true)->isNotEmpty())
                                 <tr>
                                     <td class="p-4 border border-black text-center">{{ $toets->hoofdthema->naam ?? 'N/A' }}</td>
                                     <td class="p-4 border border-black text-center">{{ $toets->deelthema->naam ?? 'N/A' }}</td>

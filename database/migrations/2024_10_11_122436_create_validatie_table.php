@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('uitdaging_id');
             $table->string('validatie_antwoord')->nullable();
             $table->boolean('voltooid')->default(false);
+            $table->text('feedback')->nullable();
             $table->timestamps();
             $table->foreign('deelthema_id')->references('id')->on('deelthemas');
             $table->foreign('user_id')->references('id')->on('users');

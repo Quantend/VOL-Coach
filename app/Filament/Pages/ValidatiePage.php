@@ -18,6 +18,9 @@ class ValidatiePage extends Page
     public $confirmingVoltooiUitdaging = false;
     public $upgradingValidatieId;
     public $showVoltooid = false;
+    public $feedbackText = '';
+    public $givingFeedback = false;
+    public $feedbackValidatieId;
 
     public function mount()
     {
@@ -96,6 +99,8 @@ class ValidatiePage extends Page
         $validatie = Validatie::findOrFail($validatieId);
         $validatie->voltooid = true;
         $validatie->save();  // Mark the current validatie as 'voltooid'
+
+        $this->giveFeedback($validatieId);
         // Optionally, display a message if the niveau is already at the maximum
         Notification::make()
             ->title('Uitdaging voltooid')
@@ -108,6 +113,40 @@ class ValidatiePage extends Page
 
         // Refresh the validaties list to reflect the changes
         $this->validaties = Validatie::with(['deelthema.hoofdthema', 'user', 'uitdaging'])->get();
+    }
+
+    public function giveFeedback($validatieId)
+    {
+        $this->feedbackValidatieId = $validatieId;
+        $this->givingFeedback = true;
+    }
+
+    public function submitFeedback()
+    {
+        // Save the feedback to the validatie record
+        $validatie = Validatie::findOrFail($this->feedbackValidatieId);
+        $validatie->feedback = $this->feedbackText;
+        $validatie->save();
+
+        // Clear and close the feedback modal
+        $this->feedbackText = '';
+        $this->givingFeedback = false;
+
+        // Optional: Display a success message
+        Notification::make()
+            ->title('Feedback opgeslagen')
+            ->body('Uw feedback is succesvol opgeslagen.')
+            ->success()
+            ->send();
+
+        // Refresh the list of validaties
+        $this->validaties = Validatie::with(['deelthema.hoofdthema', 'user', 'uitdaging'])->get();
+    }
+
+    public function cancelFeedback()
+    {
+        $this->feedbackText = '';
+        $this->givingFeedback = false;
     }
 
 

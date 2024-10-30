@@ -9,18 +9,23 @@
                            style="color: #00365e;">{{ $vraag['vraag'] }}</label>
                     <div class="flex flex-col items-center space-y-2">
                         <div class="flex items-center justify-center w-full">
-                            <span class="text-gray-500">Oneens</span>
                             <input type="range"
                                    min="1" max="5"
                                    step="1"
                                    wire:model="antwoorden.{{ $index }}"
-                                   class="mx-4 w-2/3 h-2 rounded-lg"
+                                   class="mx-4 w-full h-4 rounded-lg"
                                    style="background-color: #00365e; accent-color: #dd0069;">
-                            <span class="text-gray-500">Eens</span>
                         </div>
                         @error("antwoorden.$index")
                         <span class="text-red-500 text-sm">{{ $message }}</span>
                         @enderror
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-center text-gray-500">Nooit</span>
+                        <span class="text-center text-gray-500">Zelden</span>
+                        <span class="text-center text-gray-500">Soms</span>
+                        <span class="text-center text-gray-500">Meestal</span>
+                        <span class="text-center text-gray-500">Altijd</span>
                     </div>
                 </div>
             @endforeach

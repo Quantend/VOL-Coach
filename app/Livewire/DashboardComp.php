@@ -26,7 +26,6 @@ class DashboardComp extends Component
             // Fetch Validatie records that match the user and the eerste uitdaging_id
             $this->validatie = Validatie::where('user_id', Auth::id())
                 ->whereIn('uitdaging_id', $uitdagingIds)
-                ->where('voltooid', true)
                 ->get();
         }
     }

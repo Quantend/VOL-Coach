@@ -5,8 +5,6 @@ namespace App\Filament\Pages;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use App\Models\Validatie;
-use App\Models\Uitdaging;
-use App\Models\Zelftoets;
 
 class ValidatiePage extends Page
 {
@@ -17,7 +15,7 @@ class ValidatiePage extends Page
     public $validaties;
     public $confirmingDeletion = false;
     public $deletingValidatieId;
-    public $confirmingUpgrade = false;
+    public $confirmingVoltooiUitdaging = false;
     public $upgradingValidatieId;
     public $showVoltooid = false;
 
@@ -92,79 +90,20 @@ class ValidatiePage extends Page
         $this->deletingValidatieId = null; // Resetting the ID
     }
 
-    public function upgradeNiveau($validatieId)
+    public function voltooiUitdaging($validatieId)
     {
         // Find the validatie by ID
         $validatie = Validatie::findOrFail($validatieId);
+        $validatie->voltooid = true;
+        $validatie->save();  // Mark the current validatie as 'voltooid'
+        // Optionally, display a message if the niveau is already at the maximum
+        Notification::make()
+            ->title('Uitdaging voltooid')
+            ->body('De uitdaging is voltooid')
+            ->success()
+            ->send();
 
-        // Retrieve the current uitdaging
-        $currentUitdaging = $validatie->uitdaging;
-
-        // Get the deelthema_id from the current uitdaging
-        $deelthemaId = $currentUitdaging->deelthema_id;
-
-        // Define the order of the levels
-        $niveaus = ['experimenteren', 'toepassen', 'verdiepen'];
-
-        // Find the current index of the uitdaging's niveau in the array
-        $currentNiveauIndex = array_search($currentUitdaging->niveau, $niveaus);
-
-        // If the current niveau is not the last one, find the next niveau
-        if ($currentNiveauIndex !== false && $currentNiveauIndex < count($niveaus) - 1) {
-            // Get the next niveau
-            $nextNiveau = $niveaus[$currentNiveauIndex + 1];
-
-            // Find the next uitdaging with the same deelthema_id and next niveau
-            $nextUitdaging = Uitdaging::where('deelthema_id', $deelthemaId)
-                ->where('niveau', $nextNiveau)
-                ->first();
-
-            // Check if the next uitdaging exists
-            if ($nextUitdaging) {
-                // Mark the current validatie as 'voltooid'
-                $validatie->voltooid = true;  // Set voltooid to true for the current validatie
-                $validatie->save();  // Save the current validatie
-
-                // Create a new validatie for the next uitdaging
-                $newValidatie = new Validatie();
-                $newValidatie->user_id = $validatie->user_id;
-                $newValidatie->uitdaging_id = $nextUitdaging->id;
-                $newValidatie->deelthema_id = $deelthemaId;
-                $newValidatie->validatie_antwoord = null; // Reset the answer
-                $newValidatie->voltooid = false;  // New validatie is not yet completed
-                $newValidatie->save();  // Save the new validatie
-
-                // Optionally, update the zelftoets records for the same user and deelthema_id
-                Zelftoets::where('user_id', $validatie->user_id)
-                    ->where('deelthema_id', $deelthemaId)
-                    ->update(['uitdaging_id' => $nextUitdaging->id]);
-
-                // Optionally, display a success message
-                Notification::make()
-                    ->title('Niveau Upgraded')
-                    ->body('De uitdaging is upgraded van: **' . $currentUitdaging->niveau . '** naar: **' . $nextNiveau . '**.')
-                    ->success()
-                    ->send();
-            } else {
-                // Optionally, display a message if the next niveau is not available
-                Notification::make()
-                    ->title('Next Niveau Not Found')
-                    ->body('Er is geen volgende uitdaging beschikbaar voor het geselecteerde niveau: **' . $currentUitdaging->niveau . '**.')
-                    ->warning()
-                    ->send();
-            }
-        } else {
-            $validatie->voltooid = true;
-            $validatie->save();  // Mark the current validatie as 'voltooid'
-            // Optionally, display a message if the niveau is already at the maximum
-            Notification::make()
-                ->title('Uitdaging voltooid')
-                ->body('De uitdaging is voltooid')
-                ->success()
-                ->send();
-        }
-
-        $this->confirmingUpgrade = false;
+        $this->confirmingVoltooiUitdaging = false;
         $this->upgradingValidatieId = null;
 
         // Refresh the validaties list to reflect the changes
@@ -172,15 +111,15 @@ class ValidatiePage extends Page
     }
 
 
-    public function confirmUpgrade($validatieId)
+    public function confirmVoltooiUitdaging($validatieId)
     {
         $this->upgradingValidatieId = $validatieId; // Store validatie ID for upgrade
-        $this->confirmingUpgrade = true; // Show the confirmation modal
+        $this->confirmingVoltooiUitdaging = true; // Show the confirmation modal
     }
 
-    public function cancelUpgrade()
+    public function cancelVoltooiUitdaging()
     {
-        $this->confirmingUpgrade = false; // Hide the confirmation modal
+        $this->confirmingVoltooiUitdaging = false; // Hide the confirmation modal
         $this->upgradingValidatieId = null; // Resetting the ID
     }
 

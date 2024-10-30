@@ -21,7 +21,7 @@
                     <th class="px-4 py-2">Hoofdthema</th>
                     <th class="px-4 py-2">Deelthema</th>
                     <th class="px-4 py-2">Niveau</th>
-                    <th class="px-4 py-2">Upgrade niveau</th>
+                    <th class="px-4 py-2">Voltooi uitdaging</th>
                     <th class="px-4 py-2">Download validatie pdf</th>
                     <th class="px-4 py-2">Verwijder</th>
                 </tr>
@@ -37,20 +37,10 @@
                             <td class="border px-4 py-2">
                                 @if($validatie->voltooid === 1)
                                     Voltooid
-                                @elseif($validatie->uitdaging->niveau === 'experimenteren')
-                                    <button wire:click="confirmUpgrade({{ $validatie->id }})" style="color: blue;"
-                                            class="underline">Upgrade naar toepassen
-                                    </button>
-                                @elseif($validatie->uitdaging->niveau === 'toepassen')
-                                    <button wire:click="confirmUpgrade({{ $validatie->id }})" style="color: blue;"
-                                            class="underline">Upgrade naar verdiepen
-                                    </button>
-                                @elseif($validatie->uitdaging->niveau === 'verdiepen')
-                                    <button wire:click="confirmUpgrade({{ $validatie->id }})" style="color: blue;"
-                                            class="underline">Upgrade naar voltooid
-                                    </button>
                                 @else
-                                    Something went wrong
+                                    <button wire:click="confirmVoltooiUitdaging({{ $validatie->id }})" style="color: blue;"
+                                            class="underline">Voltooi uitdaging
+                                    </button>
                                 @endif
                             </td>
                             <td class="border px-4 py-2">
@@ -96,24 +86,23 @@
                 </div>
             </div>
         @endif
-        @if($confirmingUpgrade)
+        @if($confirmingVoltooiUitdaging)
             <div
                 style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 40;">
                 <div
                     style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; display: flex; align-items: center; justify-content: center; z-index: 50;">
                     <div
                         style="background-color: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
-                        <h2 style="font-size: 1.25rem; font-weight: bold;">Bevestig Upgrade</h2>
-                        <p>Weet je zeker dat je het niveau wilt upgraden?</p>
-                        <p>(Deze actie verwijdert het huidige beantwoorde validatie bestand)</p>
+                        <h2 style="font-size: 1.25rem; font-weight: bold;">Voltooi uitdaging</h2>
+                        <p>Weet je zeker dat je deze uitdaging als voltooid wilt zetten?</p>
                         <div style="margin-top: 16px; display: flex; justify-content: flex-end;">
-                            <button wire:click="cancelUpgrade"
+                            <button wire:click="cancelVoltooiUitdaging"
                                     style="background-color: gray; color: white; padding: 8px 16px; border-radius: 4px; margin-right: 8px; border: none; cursor: pointer;">
                                 Annuleren
                             </button>
-                            <button wire:click="upgradeNiveau({{ $validatie->id }})"
+                            <button wire:click="voltooiUitdaging({{ $validatie->id }})"
                                     style="background-color: blue; color: white; padding: 8px 16px; border-radius: 4px; border: none; cursor: pointer;">
-                                Ja, Upgrade
+                                Ja, Voltooi uitdaging
                             </button>
                         </div>
                     </div>

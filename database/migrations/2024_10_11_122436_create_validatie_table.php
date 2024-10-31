@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('validatie_antwoord')->nullable();
             $table->boolean('voltooid')->default(false);
             $table->text('feedback')->nullable();
+            $table->string('token')->nullable();
             $table->timestamps();
             $table->foreign('deelthema_id')->references('id')->on('deelthemas');
             $table->foreign('user_id')->references('id')->on('users');

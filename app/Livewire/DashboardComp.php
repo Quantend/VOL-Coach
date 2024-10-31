@@ -13,6 +13,7 @@ class DashboardComp extends Component
     public $deelthemaId;
     public $validatie;
     public $showVoltooid = false;
+    public $showFeedback = false;
 
     public function mount()
     {
@@ -49,5 +50,10 @@ class DashboardComp extends Component
     public function toggleVoltooid()
     {
         $this->showVoltooid = !$this->showVoltooid;
+    }
+
+    public function toggleFeedback()
+    {
+        $this->showFeedback = !$this->showFeedback;
     }
 }

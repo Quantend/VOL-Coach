@@ -5,11 +5,11 @@ use App\Livewire\ZelftoetsComp;
 use App\Livewire\HoofdthemaComp;
 use App\Livewire\HomeComp;
 use App\Livewire\DashboardComp;
+use App\Livewire\ValidatieComp;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HelpController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ValidatieController;
 
 Route::get('/', function () {
     if (Auth::check()) {
@@ -34,6 +34,6 @@ Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.up
 Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/validatie/{validatie_id}/{token}', [ValidatieController::class, 'show']);
+Route::get('/validatie/{user_id}/{token}', ValidatieComp::class)->name('validatie');
 
 require __DIR__.'/auth.php';

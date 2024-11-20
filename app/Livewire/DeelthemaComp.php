@@ -8,6 +8,7 @@ use App\Models\Uitdaging;
 use App\Models\Zelftoets;
 use App\Models\Validatie;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Str;
 
 class DeelthemaComp extends Component
 {
@@ -18,10 +19,10 @@ class DeelthemaComp extends Component
     public $videoId;
     public $opdrachten = [];
     public $hideUitdagingen = true;
-    public $pdfFile;
     public $hasValidatie;
     public $uitdagingVoltooid = false;
     public $correctValidatie;
+    public $token;
 
     protected $rules = [
         'pdfFile' => 'required|mimes:pdf|max:2048', // max 2MB
@@ -31,6 +32,20 @@ class DeelthemaComp extends Component
     {
         $this->deelthema = Deelthema::findOrFail($id);
         $this->extractVideoId($this->deelthema->media);
+
+        // Get the validatie record
+        $validatie = Validatie::where('deelthema_id', $this->deelthema->id)
+            ->where('user_id', auth()->id())
+            ->first();
+
+        // If a validatie exists, store its token
+        if ($validatie) {
+            $this->hasValidatie = true;
+            $this->token = $validatie->token;
+        } else {
+            $this->hasValidatie = false;
+            $this->token = null;
+        }
 
         $zelftoets = Zelftoets::where('deelthema_id', $id)
             ->where('user_id', auth()->id()) // Zorg ervoor dat de juiste user wordt opgehaald
@@ -58,7 +73,7 @@ class DeelthemaComp extends Component
                 $this->hasValidatie = Validatie::where('deelthema_id', $this->deelthema->id)
                     ->where('user_id', auth()->id())
                     ->where('uitdaging_id', $this->correctValidatie->uitdaging_id)
-                    ->whereNotNull('validatie_antwoord')  // Check if there is a PDF file
+                    ->whereNotNull('token')  // Check if there is a token
                     ->exists();
             }
             elseif ($completedValidatie) {
@@ -72,7 +87,7 @@ class DeelthemaComp extends Component
                 $this->hasValidatie = Validatie::where('deelthema_id', $this->deelthema->id)
                     ->where('user_id', auth()->id())
                     ->where('uitdaging_id', $zelftoets->uitdaging_id)
-                    ->whereNotNull('validatie_antwoord')  // Check if there is a PDF file
+                    ->whereNotNull('token')  // Check if there is a token
                     ->exists();
             }
         }
@@ -107,49 +122,69 @@ class DeelthemaComp extends Component
         return redirect()->route('hoofdthema');
     }
 
-    public function uploadPdf()
+    public function generateAndSaveToken()
     {
-        // Validate the PDF file
-        $this->validate();
-
-        // Save the PDF file with a unique name
-        $pdfName = time() . '_' . $this->pdfFile->getClientOriginalName();
-        $path = $this->pdfFile->storeAs('pdfs', $pdfName, 'public'); // Save the PDF in the 'pdfs' folder within public storage
-
-        if ($this->correctValidatie){
+        if ($this->correctValidatie) {
             $uitdagingId = $this->correctValidatie->uitdaging_id;
         } else {
-            $uitdagingId = $this->uitdaging->id;
+            $uitdagingId = $this->uitdaging ? $this->uitdaging->id : null;
         }
 
+        if (!$uitdagingId) {
+            session()->flash('error', 'No challenge found to associate the token with.');
+            return;
+        }
+
+        // Generate a random string for the token
+        $randomToken = Str::random(40);
+        $test = "example string";
 
         // Find or create a Validatie record for the current user and deelthema
         $validatie = Validatie::firstOrCreate(
             [
-                'deelthema_id' => $this->deelthema->id,  // Matching deelthema_id
-                'user_id' => auth()->id(),               // Matching user_id
+                'deelthema_id' => $this->deelthema->id,
+                'user_id' => auth()->id(),
                 'uitdaging_id' => $uitdagingId,
             ],
             [
-                'uitdaging_id' => $uitdagingId,         // Save uitdaging_id
-                'validatie_antwoord' => $path,           // Save the uploaded PDF path in validatie_antwoord
+                'uitdaging_id' => $uitdagingId,
+                'token' => $randomToken,
             ]
         );
 
-        // If validation already exists, update the PDF file
+        // Update the token if the Validatie already exists
         if (!$validatie->wasRecentlyCreated) {
-            $validatie->validatie_antwoord = $path;
+            $validatie->token = $randomToken;
             $validatie->save();
         }
+        $this->token = $randomToken;
 
-        // Set hasValidatie to true because the user has uploaded a file
         $this->hasValidatie = true;
+        // Show a success message
+        session()->flash('message', 'Token successfully generated and saved!');
+    }
 
-        // Show a success message to the user
-        session()->flash('message', 'PDF successfully uploaded!');
+    public function resetVoltooid()
+    {
+        // Find the Validatie record with voltooid set to true for the current user and deelthema
+        $validatie = Validatie::where('deelthema_id', $this->deelthema->id)
+            ->where('user_id', auth()->id())
+            ->where('voltooid', true) // Filter for the voltooid true records
+            ->first();
 
-        // Reset the file input
-        $this->reset('pdfFile');
+        if ($validatie) {
+            // Set voltooid to 0
+            $validatie->voltooid = 0;
+            $validatie->save();
+
+            // Optionally, show a success message
+            session()->flash('message', 'Validation status has been reset successfully.');
+
+            return redirect()->route('deelthema', ['id' => $this->deelthema->id]);
+        } else {
+            // Optionally, show an error message if no matching record is found
+            session()->flash('error', 'No completed validation found to reset.');
+        }
     }
 
     public function render()
@@ -162,6 +197,7 @@ class DeelthemaComp extends Component
             'hasValidatie' => $this->hasValidatie,
             'correctValidatie' => $this->correctValidatie,
             'uitdagingVoltooid' => $this->uitdagingVoltooid,
+            'token' => $this->token,
         ])->layout('layouts.app');
     }
 

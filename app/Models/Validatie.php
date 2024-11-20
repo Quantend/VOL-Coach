@@ -9,7 +9,7 @@ class Validatie extends Model
 {
     protected $table = 'validatie';
 
-    protected $fillable = ['deelthema_id', 'user_id', 'uitdaging_id', 'validatie_antwoord', 'voltooid', 'feedback'];
+    protected $fillable = ['deelthema_id', 'user_id', 'uitdaging_id', 'validatie_antwoord', 'voltooid', 'feedback', 'token'];
 
     public function deelthema()
     {

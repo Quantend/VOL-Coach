@@ -17,11 +17,11 @@
     }
     @font-face {
         font-family: 'arial';
-        src: url('../fonts/arial.woff2') format('woff2');
+        src: url('../fonts/ArialMT.woff2') format('woff2');
     }
     @font-face {
         font-family: 'poppins';
-        src: url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap');
+        src: url('../fonts/poppins-regular-webfont.woff2') format('woff2');
     }
 }
 

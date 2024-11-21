@@ -15,8 +15,8 @@ export default {
                 maaxRegular: ['maax-regular', ...defaultTheme.fontFamily.sans],
                 maaxBold: ['maax-bold', ...defaultTheme.fontFamily.sans],
                 maaxMedium: ['maax-medium', ...defaultTheme.fontFamily.sans],
-                arial: ['arial', ...defaultTheme.fontFamily.sans],
-                poppins: ['poppins', ...defaultTheme.fontFamily.sans],
+                arial: ['ArialMT', ...defaultTheme.fontFamily.sans],
+                poppins: ['poppins-regular-webfont', ...defaultTheme.fontFamily.sans],
             },
 
             colors: {

@@ -1,123 +1,118 @@
 <div class="max-w-7xl mx-auto sm:px-6 lg:px-10 space-y-6 mt-8">
-    <div class="p-4 sm:p-8 sm:rounded-lg">
+    <div class="bg-gray-100 p-6 sm:p-10 rounded-xl shadow-md">
         <div>
-            <h1 class="">Dashboard</h1>
+            <h1 class="text-2xl font-bold text-gray-800">Overzicht</h1>
         </div>
 
-
         @if($zelftoets->isEmpty())
-            <div class="flex justify-center">
-                <p class="font-bold text-pink-400 p-4 bg-white rounded-2xl w-full mx-4 text-center">Nog geen uitdagingen
-                    gevonden</p>
+            <div class="flex justify-center mt-6">
+                <p class="font-semibold text-pink-500 bg-white shadow-md p-6 rounded-xl w-full mx-4 text-center">
+                    Nog geen uitdagingen gevonden
+                </p>
             </div>
         @else
-            <div class="flex justify-center">
-                <button wire:click="toggleVoltooid"
-                        class="my-4 px-3 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
-                    @if ($showVoltooid)
-                        Toon onvoltooide uitdagingen
-                    @else
-                        Toon voltooide uitdagingen
-                    @endif
+            <div class="flex justify-end mt-6">
+                <button class="flex items-center justify-between px-6 py-3 bg-pink-400 text-white font-semibold rounded-lg shadow hover:bg-pink-500 active:bg-pink-600 transition focus:outline-none" wire:click="toggleVoltooid">
+                    <span class="mr-3">
+                        @if ($showVoltooid)
+                            Toon onvoltooide uitdagingen
+                        @else
+                            Toon voltooide uitdagingen
+                        @endif
+                    </span>
+                    <svg class="w-5 h-5 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                        <path fill="currentColor" d="M3.9 54.9C10.5 40.9 24.5 32 40 32h432c15.5 0 29.5 8.9 36.1 22.9s4.6 30.5-5.2 42.5L320 320.9V448c0 12.1-6.8 23.2-17.7 28.6s-23.8 4.3-33.5-3l-64-48c-8.1-6-12.8-15.5-12.8-25.6V320.9L9 97.3C-.7 85.4-2.8 68.8 3.9 54.9z" />
+                    </svg>
                 </button>
             </div>
-
             <div>
-                <table class="bg-white w-full mx-4">
+                <table class="bg-white w-full mx-4 mt-6 rounded-md overflow-hidden shadow-md">
                     <thead>
-                    <tr>
-                        <th class="p-4 border border-black text-pink-400 text-xl rounded-tl-2xl">Hoofdthema</th>
-                        <th class="p-4 border border-black text-pink-400 text-xl">Deelthema</th>
-                        <th class="p-4 border border-black text-pink-400 text-xl">Niveau</th>
-                        <th class="p-4 border border-black text-pink-400 text-xl">Status</th>
-                        <th class="p-4 border border-black text-pink-400 text-xl">Feedback</th>
-                        <th class="p-4 border border-black text-pink-400 text-xl rounded-tl-2xr">Link</th>
-                    </tr>
+                        <tr class="bg-blue-100 text-blue-600">
+                            <th class="p-4 text-left text-sm font-semibold">Hoofdthema</th>
+                            <th class="p-4 text-left text-sm font-semibold">Deelthema</th>
+                            <th class="p-4 text-left text-sm font-semibold">Niveau</th>
+                            <th class="p-4 text-left text-sm font-semibold">Status</th>
+                            <th class="p-4 text-left text-sm font-semibold">Feedback</th>
+                            <th class="p-4 text-left text-sm font-semibold">Link</th>
+                        </tr>
                     </thead>
-                    <tbody>
-                    @if($showVoltooid)
-                        @foreach($zelftoets as $toets)
-                            @if($validatie->where('uitdaging_id', $toets->uitdaging_id)->where('voltooid', true)->isNotEmpty())
-                                <tr>
-
-                                    <td class="p-4 border border-black text-center">{{ $toets->hoofdthema->naam ?? 'N/A' }}</td>
-                                    <td class="p-4 border border-black text-center">{{ $toets->deelthema->naam ?? 'N/A' }}</td>
-                                    <td class="p-4 border border-black text-center">{{ $toets->uitdaging->niveau ?? 'N/A' }}</td>
-                                    <td class="p-4 border border-black text-center">
-                                        @if($validatie->where('uitdaging_id', $toets->uitdaging_id)->where('voltooid', true)->isNotEmpty())
-                                            <div class="text-green-500">Voltooid</div>
-                                        @elseif($validatie->where('uitdaging_id', $toets->uitdaging_id)->where('validatie_antwoord')->isNotEmpty())
-                                            <div class="text-blue-500">Staat open voor review</div>
-                                        @else
-                                            <div class="">Nog niet voltooid</div>
-                                        @endif
-                                    </td>
-                                    <td class="p-4 border border-black text-center">
-                                        @if($showFeedback && $validatie->where('uitdaging_id', $toets->uitdaging_id  )->where('feedback')->isNotEmpty())
-                                            {{  $validatie->where('uitdaging_id', $toets->uitdaging_id  )->where('feedback')->first()->feedback  }}
-                                            <br>
-                                            <button wire:click="toggleFeedback"
-                                                    class="text-blue-600 underline cursor-pointer hover:text-blue-800 text-center">
-                                                Verberg Feedback
+                    <tbody class="divide-y divide-gray-200">
+                        @if($showVoltooid)
+                            @foreach($zelftoets as $toets)
+                                @if($validatie->where('uitdaging_id', $toets->uitdaging_id)->where('voltooid', true)->isNotEmpty())
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="p-4 text-gray-700">{{ $toets->hoofdthema->naam ?? 'N/A' }}</td>
+                                        <td class="p-4 text-gray-700">{{ $toets->deelthema->naam ?? 'N/A' }}</td>
+                                        <td class="p-4 text-gray-700">{{ $toets->uitdaging->niveau ?? 'N/A' }}</td>
+                                        <td class="p-4">
+                                            @if($validatie->where('uitdaging_id', $toets->uitdaging_id)->where('voltooid', true)->isNotEmpty())
+                                                <span class="text-green-500 font-semibold">Voltooid</span>
+                                            @elseif($validatie->where('uitdaging_id', $toets->uitdaging_id)->where('validatie_antwoord')->isNotEmpty())
+                                                <span class="text-blue-500 font-semibold">Staat open voor review</span>
+                                            @else
+                                                <span class="text-gray-500">Nog niet voltooid</span>
+                                            @endif
+                                        </td>
+                                        <td class="p-4">
+                                            @if($showFeedback && $validatie->where('uitdaging_id', $toets->uitdaging_id)->where('feedback')->isNotEmpty())
+                                                <div>{{ $validatie->where('uitdaging_id', $toets->uitdaging_id)->where('feedback')->first()->feedback }}</div>
+                                                <button wire:click="toggleFeedback" class="text-blue-600 underline hover:text-blue-700 mt-2">
+                                                    Verberg Feedback
+                                                </button>
+                                            @elseif($validatie->where('uitdaging_id', $toets->uitdaging_id)->where('feedback')->isNotEmpty())
+                                                <button wire:click="toggleFeedback" class="text-blue-600 underline hover:text-blue-700">
+                                                    Toon feedback
+                                                </button>
+                                            @else
+                                                <span class="text-gray-500">n.n.b.</span>
+                                            @endif
+                                        </td>
+                                        <td class="p-4">
+                                            <button wire:click="toDeelthema({{ $toets->deelthema->id }})" class="text-blue-600 underline hover:text-blue-700">
+                                                Naar deelthema
                                             </button>
-                                        @elseif($validatie->where('uitdaging_id', $toets->uitdaging_id  )->where('feedback')->isNotEmpty())
-                                            <button wire:click="toggleFeedback"
-                                                    class="text-blue-600 underline cursor-pointer hover:text-blue-800">
-                                                Toon feedback
+                                        </td>
+                                    </tr>
+                                @endif
+                            @endforeach
+                        @else
+                            @foreach($zelftoets as $toets)
+                                @if($validatie->where('uitdaging_id', $toets->uitdaging_id)->where('voltooid', false)->isNotEmpty() || !$validatie->where('uitdaging_id', $toets->uitdaging_id)->where('voltooid', true)->isNotEmpty())
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="p-4 text-gray-700">{{ $toets->hoofdthema->naam ?? 'N/A' }}</td>
+                                        <td class="p-4 text-gray-700">{{ $toets->deelthema->naam ?? 'N/A' }}</td>
+                                        <td class="p-4 text-gray-700">{{ $toets->uitdaging->niveau ?? 'N/A' }}</td>
+                                        <td class="p-4">
+                                            @if($validatie->where('uitdaging_id', $toets->uitdaging_id)->where('validatie_antwoord')->isNotEmpty())
+                                                <span class="text-blue-500 font-semibold">Staat open voor review</span>
+                                            @else
+                                                <span class="text-gray-500">Nog niet voltooid</span>
+                                            @endif
+                                        </td>
+                                        <td class="p-4">
+                                            @if($showFeedback && $validatie->where('uitdaging_id', $toets->uitdaging_id)->where('feedback')->isNotEmpty())
+                                                <div>{{ $validatie->where('uitdaging_id', $toets->uitdaging_id)->where('feedback')->first()->feedback }}</div>
+                                            @elseif($validatie->where('uitdaging_id', $toets->uitdaging_id)->where('feedback')->isNotEmpty())
+                                                <button wire:click="toggleFeedback" class="text-blue-600 underline hover:text-blue-800">
+                                                    Toon feedback
+                                                </button>
+                                            @else
+                                                <span class="text-gray-500">n.n.b.</span>
+                                            @endif
+                                        </td>
+                                        <td class="p-4">
+                                            <button wire:click="toDeelthema({{ $toets->deelthema->id }})" class="text-blue-600 underline hover:text-blue-800">
+                                                Naar deelthema
                                             </button>
-                                        @else
-                                            n.n.b.
-                                        @endif
-                                    </td>
-                                    <td class="p-4 border border-black text-center">
-                                        <button wire:click="toDeelthema({{ $toets->deelthema->id }})"
-                                                class="text-blue-600 underline cursor-pointer hover:text-blue-800">
-                                            Naar deelthema
-                                        </button>
-                                    </td>
-                                </tr>
-                            @endif
-                        @endforeach
-                    @else
-                        @foreach($zelftoets as $toets)
-                            @if($validatie->where('uitdaging_id', $toets->uitdaging_id)->where('voltooid', false)->isNotEmpty() || !$validatie->where('uitdaging_id', $toets->uitdaging_id)->where('voltooid', true)->isNotEmpty())
-                                <tr>
-                                    <td class="p-4 border border-black text-center">{{ $toets->hoofdthema->naam ?? 'N/A' }}</td>
-                                    <td class="p-4 border border-black text-center">{{ $toets->deelthema->naam ?? 'N/A' }}</td>
-                                    <td class="p-4 border border-black text-center">{{ $toets->uitdaging->niveau ?? 'N/A' }}</td>
-                                    <td class="p-4 border border-black text-center">
-                                        @if($validatie->where('uitdaging_id', $toets->uitdaging_id)->where('validatie_antwoord')->isNotEmpty())
-                                            <div class="text-blue-500">Staat open voor review</div>
-                                        @else
-                                            <div class="">Nog niet voltooid</div>
-                                        @endif
-                                    </td>
-                                    <td class="p-4 border border-black text-center">
-                                        @if($showFeedback && $validatie->where('uitdaging_id', $toets->uitdaging_id  )->where('feedback')->isNotEmpty())
-                                            {{  $validatie->where('uitdaging_id', $toets->uitdaging_id  )->where('feedback')->first()->feedback  }}
-                                        @elseif($validatie->where('uitdaging_id', $toets->uitdaging_id  )->where('feedback')->isNotEmpty())
-                                            <button wire:click="toggleFeedback"
-                                                    class="text-blue-600 underline cursor-pointer hover:text-blue-800">
-                                                Show feedback
-                                            </button>
-                                        @else
-                                            n.n.b.
-                                        @endif
-                                    </td>
-                                    <td class="p-4 border border-black text-center">
-                                        <button wire:click="toDeelthema({{ $toets->deelthema->id }})"
-                                                class="text-blue-600 underline cursor-pointer hover:text-blue-800">
-                                            Naar deelthema
-                                        </button>
-                                    </td>
-                                </tr>
-                            @endif
-                        @endforeach
-                    @endif
+                                        </td>
+                                    </tr>
+                                @endif
+                            @endforeach
+                        @endif
                     </tbody>
                 </table>
             </div>
         @endif
-
     </div>
 </div>

@@ -13,7 +13,7 @@
                                    min="1" max="5"
                                    step="1"
                                    wire:model="antwoorden.{{ $index }}"
-                                   class="mx-4 w-full h-4 rounded-lg"
+                                   class="mx-4 w-full h-4 rounded-lg hover:cursor-pointer"
                                    style="background-color: #00365e; accent-color: #dd0069;">
                         </div>
                         @error("antwoorden.$index")
@@ -39,7 +39,5 @@
             </button>
         </form>
     </div>
-    <div class="h-10">
-
-    </div>
+    <div class="h-10"></div>
 </div>

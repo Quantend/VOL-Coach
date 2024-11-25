@@ -43,7 +43,9 @@ class DeelthemaResource extends Resource
                         TextInput::make('media')
                             ->label('Youtube link')
                     ]),
-                TextArea::make('beschrijving'),
+                TextArea::make('beschrijving')
+                    ->maxLength(80)
+                    ->label('Korte beschrijving (maximaal 80 karakters)'),
                 Repeater::make('vragen')
                     ->schema([
                         TextInput::make('vraag')

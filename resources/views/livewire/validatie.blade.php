@@ -8,7 +8,7 @@
     <p>User ID: {{ $user_id }}</p>
     <p>Token: {{ $token }}</p>
 
-    <h1>Upload Validation PDF and Provide Feedback</h1>
+    <h1>Upload Validation PDF or .word and Provide Feedback</h1>
 
     <!-- Show success message -->
     @if (session()->has('message'))

@@ -48,7 +48,7 @@ class UitdagingResource extends Resource
                             ->label('Validatie formulier (pdf)')
                             ->maxSize(2048)
                             ->preserveFilenames()
-                            ->acceptedFileTypes(['application/pdf']),
+                            ->acceptedFileTypes(['application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/msword',]),
                     ]),
                 Grid::make(1)
                     ->schema([

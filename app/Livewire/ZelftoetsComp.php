@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Uitdaging;
+use App\Models\Validatie;
 use Livewire\Component;
 use App\Models\Deelthema;
 use App\Models\Zelftoets;
@@ -116,6 +117,20 @@ class ZelftoetsComp extends Component
             'user_id' => auth()->id(),
             'uitslag' => $uitslagArray,
             'uitdaging_id' => $uitdaging ? $uitdaging->id : null,
+        ]);
+
+        $existingValidatie = Validatie::where('deelthema_id', $this->hoofdthemaId)
+            ->where('user_id', auth()->id())
+            ->first();
+        if ($existingValidatie) {
+            $existingValidatie->delete();
+        }
+
+        $validatie = Validatie::create([
+            'deelthema_id' => $laagsteDeelthemaId,
+            'user_id' => auth()->id(),
+            'uitdaging_id' => $uitdaging ? $uitdaging->id : null,
+            'voltooid' => 0,
         ]);
 
         return redirect()->route('deelthema', ['id' => $laagsteDeelthemaId]);

@@ -1,6 +1,15 @@
 <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+<div class="relative">
+    <a href="{{ route('home') }}">
+    <img class="ignore w-40 absolute left-4" src="{{asset('logo-vol.png')}}">
+    </a>
+  </div>
+  
+
 <x-guest-layout>
+
+    
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
@@ -21,7 +30,7 @@
                             type="password"
                             name="password"
                             required autocomplete="current-password" />
-                            <ion-icon class="absolute inset-y-9 left-80 pl-14 text-gray-600 cursor-pointer text-xl" onclick="myFunction()" name="eye-outline"></ion-icon>
+                            <ion-icon class="absolute inset-y-9 left-96 pl-14 text-gray-600 cursor-pointer text-xl" onclick="myFunction()" name="eye-outline"></ion-icon>
 
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
@@ -30,7 +39,7 @@
         <div class="block mt-4">
             <label for="remember_me" class="inline-flex items-center">
                 <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
-                <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
+                <span class="ms-2 text-md text-gray-600 font-maaxRegular">{{ __('Remember me') }}</span>
             </label>
         </div>
 
@@ -47,8 +56,8 @@
             @if (Route::has('register'))
             <a
                 href="{{ route('register') }}"
-                class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 no-underline"
-            >
+                class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 hover:text-white  focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 no-underline"
+                >
                 {{__('register')}}
             </a>
         @endif

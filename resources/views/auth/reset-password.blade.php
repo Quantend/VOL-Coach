@@ -1,3 +1,9 @@
+<div class="relative">
+    <a href="{{ route('home') }}">
+    <img class="ignore w-48 absolute left-4" src="{{asset('logo-vol.png')}}">
+    </a>
+  </div>
+
 <x-guest-layout>
     <form method="POST" action="{{ route('password.store') }}">
         @csrf

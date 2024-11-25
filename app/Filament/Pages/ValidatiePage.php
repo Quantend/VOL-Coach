@@ -39,13 +39,17 @@ class ValidatiePage extends Page
             abort(404, 'File not found.');
         }
 
+        // Get file extension
+        $extension = pathinfo($filePath, PATHINFO_EXTENSION);
+
         // Creates a custom filename
         $filename = sprintf(
-            '%s.%s.%s.%s.pdf',
+            '%s.%s.%s.%s.%s',
             $validatie->user->name,                      // User's name
             $validatie->deelthema->hoofdthema->naam,    //Hoofdthema naam
             $validatie->deelthema->naam,                 // Deelthema naam
             $validatie->uitdaging->niveau,                 // Uitdaging niveau
+            $extension                                     // path extension
         );
 
         return response()->download($filePath, $filename);

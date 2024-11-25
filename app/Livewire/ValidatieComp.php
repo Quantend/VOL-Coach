@@ -33,8 +33,8 @@ class ValidatieComp extends Component
     {
         // Validate the file upload
         $this->validate([
-            'pdfFile' => 'required|file|mimes:pdf,docx|max:10240', // Max 10MB
-            'feedback' => 'required|string|max:255',
+            'pdfFile' => 'required|file|mimes:pdf,docx|max:51200', // Max 50MB
+            'feedback' => 'nullable|string|max:255',
         ]);
 
         // Generate a unique name for the PDF file

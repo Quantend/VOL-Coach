@@ -5,10 +5,8 @@
         <p>We appreciate your input.</p>
     @else
     <h1>Validation Page</h1>
-    <p>User ID: {{ $user_id }}</p>
-    <p>Token: {{ $token }}</p>
 
-    <h1>Upload Validation PDF or .word and Provide Feedback</h1>
+    <h1>Upload Validation PDF of word bestand en geef Feedback</h1>
 
     <!-- Show success message -->
     @if (session()->has('message'))
@@ -26,7 +24,7 @@
         @enderror
 
         <!-- Feedback input -->
-        <textarea wire:model="feedback" placeholder="Provide your feedback..." rows="4"></textarea>
+        <textarea wire:model="feedback" placeholder="Geef additional feedback... (optioneel)" rows="4"></textarea>
 
         @error('feedback')
         <span class="text-red-500">{{ $message }}</span>

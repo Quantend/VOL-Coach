@@ -1,3 +1,9 @@
+<div class="relative">
+    <a href="{{ route('home') }}">
+    <img class="ignore w-48 absolute left-4" src="{{asset('logo-vol.png')}}">
+    </a>
+  </div>
+
 <x-guest-layout>
     <div class="mb-4 text-sm text-gray-600">
         {{ __('Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn\'t receive the email, we will gladly send you another.') }}

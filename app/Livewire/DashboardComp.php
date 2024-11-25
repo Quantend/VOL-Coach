@@ -43,7 +43,7 @@ class DashboardComp extends Component
             // Render the deelthema view with the passed ID
             return view('livewire.deelthema', ['id' => $this->deelthemaId]);
         }
-        return view('livewire.dashboard')->layout('layouts.app');
+        return view('livewire.inzichten')->layout('layouts.app');
 
     }
 

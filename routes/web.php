@@ -27,7 +27,7 @@ Route::post('/help', [HelpController::class, 'submit'])->name('help.submit');
 Route::get('/hoofdthema', HoofdthemaComp::class)->name('hoofdthema');
 Route::get('/deelthema/{id}', DeelthemaComp::class)->name('deelthema');
 Route::get('/zelftoets/{hoofdthema}', ZelftoetsComp::class)->name('zelftoets');
-Route::get('/dashboard', DashboardComp::class)->name('dashboard');
+Route::get('/inzichten', DashboardComp::class)->name('inzichten');
 
 Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
 Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

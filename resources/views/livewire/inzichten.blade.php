@@ -12,6 +12,15 @@
             </div>
         @else
             <div class="flex justify-end mt-6">
+                <select
+                    class="px-6 py-3 bg-white border border-gray-300 rounded-lg shadow text-gray-700 font-semibold focus:ring-2 focus:ring-blue-500" 
+                    wire:model="filterStatus">
+                    <option value="all">Toon alle uitdagingen</option>
+                    <option value="completed">Toon voltooide uitdagingen</option>
+                    <option value="incomplete">Toon onvoltooide uitdagingen</option>
+                </select>
+            </div>
+            <div class="flex justify-end mt-6">
                 <button class="flex items-center justify-between px-6 py-3 bg-pink-400 text-white font-semibold rounded-lg shadow hover:bg-pink-500 active:bg-pink-600 transition focus:outline-none" wire:click="toggleVoltooid">
                     <span class="mr-3">
                         @if ($showVoltooid)
@@ -38,7 +47,7 @@
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200">
-                        @if($showVoltooid)
+                        @if($filterStatus == 'all')
                             @foreach($zelftoets as $toets)
                                 @if($validatie->where('uitdaging_id', $toets->uitdaging_id)->where('voltooid', true)->isNotEmpty())
                                     <tr class="hover:bg-gray-50">
@@ -76,7 +85,7 @@
                                     </tr>
                                 @endif
                             @endforeach
-                        @else
+                        @elseif()
                             @foreach($zelftoets as $toets)
                                 @if($validatie->where('uitdaging_id', $toets->uitdaging_id)->where('voltooid', false)->isNotEmpty() || !$validatie->where('uitdaging_id', $toets->uitdaging_id)->where('voltooid', true)->isNotEmpty())
                                     <tr class="hover:bg-gray-50">
@@ -109,6 +118,7 @@
                                     </tr>
                                 @endif
                             @endforeach
+                            
                         @endif
                     </tbody>
                 </table>

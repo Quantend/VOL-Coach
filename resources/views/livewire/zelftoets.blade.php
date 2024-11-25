@@ -40,4 +40,18 @@
         </form>
     </div>
     <div class="h-10"></div>
+    @if($showValidatieDelete)
+        <div class="absolute-overlay">
+            <div class="confirmation-box">
+                <p>Are you sure you want to delete the existing validatie?</p>
+                <button wire:click="toggleValidatie" class="btn btn-secondary">
+                    Cancel
+                </button>
+                <button
+                    wire:click="confirmDeleteValidatie({{ $laagsteDeelthemaId }}, {{ $uitdaging ? $uitdaging->id : 'null' }})" class="btn btn-danger">
+                    Delete and Create New
+                </button>
+            </div>
+        </div>
+    @endif
 </div>

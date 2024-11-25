@@ -14,6 +14,9 @@ class ZelftoetsComp extends Component
     public $vragen = [];
     public $antwoorden = [];
     public $hoofdthemaId;
+    public $showValidatieDelete = false;
+    public $laagsteDeelthemaId;
+    public $uitdaging;
 
     public function mount($hoofdthema)
     {
@@ -83,6 +86,7 @@ class ZelftoetsComp extends Component
             }
         }
 
+        $this->laagsteDeelthemaId = $laagsteDeelthemaId;
         // Zoek de juiste uitdaging op basis van deelthema_id en niveau
         $uitdaging = null;
         if ($laagsteDeelthemaId !== null) {
@@ -101,6 +105,8 @@ class ZelftoetsComp extends Component
                 ->first();
         }
 
+        $this->uitdaging = $uitdaging;
+
         // Verwijder de oude zelftoets als deze bestaat
         $existingZelftoets = Zelftoets::where('hoofdthema_id', $this->hoofdthemaId)
             ->where('user_id', auth()->id())
@@ -111,7 +117,7 @@ class ZelftoetsComp extends Component
         }
 
         // Maak de zelftoets aan met de juiste uitdaging_id
-        $zelftoets = Zelftoets::create([
+        Zelftoets::create([
             'hoofdthema_id' => $this->hoofdthemaId,
             'deelthema_id' => $laagsteDeelthemaId,
             'user_id' => auth()->id(),
@@ -123,10 +129,10 @@ class ZelftoetsComp extends Component
             ->where('user_id', auth()->id())
             ->first();
         if ($existingValidatie) {
-            $existingValidatie->delete();
+            return $this->showValidatieDelete = true;
         }
 
-        $validatie = Validatie::create([
+        Validatie::create([
             'deelthema_id' => $laagsteDeelthemaId,
             'user_id' => auth()->id(),
             'uitdaging_id' => $uitdaging ? $uitdaging->id : null,
@@ -136,12 +142,38 @@ class ZelftoetsComp extends Component
         return redirect()->route('deelthema', ['id' => $laagsteDeelthemaId]);
     }
 
+    public function confirmDeleteValidatie($laagsteDeelthemaId, $uitdagingId)
+    {
+        $existingValidatie = Validatie::where('deelthema_id', $this->hoofdthemaId)
+            ->where('user_id', auth()->id())
+            ->first();
+
+        if ($existingValidatie) {
+            $existingValidatie->delete();
+        }
+
+        Validatie::create([
+            'deelthema_id' => $laagsteDeelthemaId,
+            'user_id' => auth()->id(),
+            'uitdaging_id' => $uitdagingId ? $uitdagingId : null,  // Use the passed 'uitdagingId'
+            'voltooid' => 0,
+        ]);
+
+        return redirect()->route('deelthema', ['id' => $laagsteDeelthemaId]);
+    }
+
+    public function toggleValidatie()
+    {
+        $this->showValidatieDelete = !$this->showValidatieDelete;
+    }
+
 
     public function render()
     {
         return view('livewire.zelftoets', [
             'deelthemas' => $this->deelthemas,
             'vragen' => $this->vragen,
+            'laagsteDeelthemaId' => $this->laagsteDeelthemaId,
         ])->layout('layouts.app');
     }
 }

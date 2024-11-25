@@ -14,7 +14,7 @@ class DashboardComp extends Component
     public $validatie;
     public $showVoltooid = false;
     public $showFeedback = false;
-    public $filterStatus = 'all';
+    public $filterStatus = 'incomplete';
 
     public function mount()
     {
@@ -38,19 +38,35 @@ class DashboardComp extends Component
         return redirect()->route('deelthema', ['id' => $id]);
     }
 
+    public function getFilteredData()
+    {
+        return match ($this->filterStatus) {
+            'all' => $this->zelftoets,
+            'completed' => $this->zelftoets->filter(function ($toets) {
+                return $this->validatie
+                    ->where('uitdaging_id', $toets->uitdaging_id)
+                    ->where('voltooid', true)
+                    ->isNotEmpty();
+            }),
+            'incomplete' => $this->zelftoets->filter(function ($toets) {
+                return $this->validatie
+                    ->where('uitdaging_id', $toets->uitdaging_id)
+                    ->where('voltooid', false)
+                    ->isNotEmpty();
+            }),
+        };
+    }
+
     public function render()
     {
         if ($this->deelthemaId) {
             // Render the deelthema view with the passed ID
             return view('livewire.deelthema', ['id' => $this->deelthemaId]);
         }
-        return view('livewire.inzichten')->layout('layouts.app');
 
-    }
-
-    public function toggleVoltooid()
-    {
-        $this->showVoltooid = !$this->showVoltooid;
+        return view('livewire.inzichten', [
+            'filteredZelftoets' => $this->getFilteredData(),
+        ])->layout('layouts.app');
     }
 
     public function toggleFeedback()

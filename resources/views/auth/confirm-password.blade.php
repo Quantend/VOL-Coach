@@ -1,3 +1,9 @@
+<div class="relative">
+    <a href="{{ route('home') }}">
+    <img class="ignore w-48 absolute left-4" src="{{asset('logo-vol.png')}}">
+    </a>
+  </div>
+
 <x-guest-layout>
     <div class="mb-4 text-sm text-gray-600">
         {{ __('This is a secure area of the application. Please confirm your password before continuing.') }}

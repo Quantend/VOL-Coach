@@ -94,7 +94,7 @@
                                             @if($showFeedback && $validatie->where('uitdaging_id', $toets->uitdaging_id)->where('feedback')->isNotEmpty())
                                                 <div>{{ $validatie->where('uitdaging_id', $toets->uitdaging_id)->where('feedback')->first()->feedback }}</div>
                                             @elseif($validatie->where('uitdaging_id', $toets->uitdaging_id)->where('feedback')->isNotEmpty())
-                                                <button wire:click="toggleFeedback" class="text-blue-600 underline hover:text-blue-800">
+                                                <button wire:click="toggleFeedback" class="text-blue-600 underline">
                                                     Toon feedback
                                                 </button>
                                             @else
@@ -102,7 +102,7 @@
                                             @endif
                                         </td>
                                         <td class="p-4">
-                                            <button wire:click="toDeelthema({{ $toets->deelthema->id }})" class="text-blue-600 underline hover:text-blue-800">
+                                            <button wire:click="toDeelthema({{ $toets->deelthema->id }})" class="text-blue-600 underline">
                                                 Naar deelthema
                                             </button>
                                         </td>

@@ -173,16 +173,17 @@ class DeelthemaComp extends Component
             ->first();
 
         if ($validatie) {
-            // Set voltooid to 0
             $validatie->voltooid = 0;
+            $validatie->validatie_antwoord = null;
+            $validatie->feedback = null;
             $validatie->save();
 
-            // Optionally, show a success message
+            // Show a success message
             session()->flash('message', 'Validation status has been reset successfully.');
 
             return redirect()->route('deelthema', ['id' => $this->deelthema->id]);
         } else {
-            // Optionally, show an error message if no matching record is found
+            // how an error message if no matching record is found
             session()->flash('error', 'No completed validation found to reset.');
         }
     }

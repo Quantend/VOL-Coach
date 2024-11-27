@@ -44,7 +44,7 @@
                                 @if($hasValidatie && $token !== "completed")
                                     <h2 class="text-2xl font-bold">Validatie link</h2>
                                     <button onclick="copyToClipboard()" class="cursor-pointer theme-button">Copy Link</button>
-                                    <p id="copyText">https://vol-coach.test/validatie/{{ auth()->id() }}/{{ $token }}</p>
+                                    <p id="copyText">https://vol-coach.gildedevops.it/validatie/{{ auth()->id() }}/{{ $token }}</p>
                                     <button wire:click="toggleHasValidatie"
                                             class="cursor-pointer theme-button">
                                         Genereer een nieuwe link

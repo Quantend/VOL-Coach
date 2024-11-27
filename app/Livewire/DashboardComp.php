@@ -14,7 +14,7 @@ class DashboardComp extends Component
     public $validatie;
     public $showVoltooid = false;
     public $showFeedback = false;
-    public $filterStatus = 'incomplete';
+    public $filterStatus = 'all';
 
     public function mount()
     {

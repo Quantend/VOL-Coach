@@ -42,9 +42,9 @@
             </div>
 
             <div class="mt-6 flex justify-end">
-                <x-secondary-button x-on:click="$dispatch('close')">
+                <button class="theme-button" x-on:click="$dispatch('close')">
                     {{ __('Annuleren') }}
-                </x-secondary-button>
+                </button>
 
                 <x-danger-button class="ms-3">
                     {{ __('Account Verwijderen') }}

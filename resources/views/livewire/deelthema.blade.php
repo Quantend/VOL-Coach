@@ -20,7 +20,7 @@
                 @endif
                 @if ($uitdagingVoltooid === true)
                     <p class="flex justify-center mt-10 text-green-500">Uitdaging voltooid</p>
-                    <button wire:click="resetVoltooid">Reset validatie?</button>
+                    <button wire:click="resetVoltooid" class="cursor-pointer theme-button">Reset validatie?</button>
                 @elseif($uitdaging)
                     @if($hideUitdagingen)
                         <div class="flex justify-center">

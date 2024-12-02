@@ -3,7 +3,7 @@
         <div class="p-4 sm:p-8 bg-white shadow sm:rounded-xl">
             <div class="max-w-xl mx-auto">
 
-                <h1 class="text-3xl text-center mb-2">{{__('Help')}}</h1>
+                <h1 class="text-3xl text-center mb-2 font-maaxMedium">{{__('Help')}}</h1>
 
                 <!-- Formulier start -->
                 <form action="{{ route('help.submit') }}" method="POST">

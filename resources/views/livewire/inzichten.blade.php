@@ -20,7 +20,6 @@
                     <option value="incomplete">Toon onvoltooide uitdagingen</option>
                 </select>
             </div>
-            <p>Geselecteerde status: {{ $filterStatus }}</p>
                 <table class="bg-white w-full mx-4 mt-6 rounded-md overflow-hidden shadow-md">
                     <thead>
                     <tr class="bg-blue-100 text-blue-600">

@@ -155,7 +155,7 @@ class ZelftoetsComp extends Component
         Validatie::create([
             'deelthema_id' => $laagsteDeelthemaId,
             'user_id' => auth()->id(),
-            'uitdaging_id' => $uitdagingId ? $uitdagingId : null,  // Use the passed 'uitdagingId'
+            'uitdaging_id' => $uitdagingId,  // Use the passed 'uitdagingId'
             'voltooid' => 0,
         ]);
 

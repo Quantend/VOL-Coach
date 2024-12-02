@@ -41,16 +41,22 @@
     </div>
     <div class="h-10"></div>
     @if($showValidatieDelete)
-        <div class="absolute-overlay">
-            <div class="confirmation-box">
-                <p>Are you sure you want to delete the existing validatie?</p>
-                <button wire:click="toggleValidatie" class="btn btn-secondary">
-                    Cancel
-                </button>
-                <button
-                    wire:click="confirmDeleteValidatie({{ $laagsteDeelthemaId }}, {{ $uitdaging ? $uitdaging->id : 'null' }})" class="btn btn-danger">
-                    Delete and Create New
-                </button>
+        <div class="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-40">
+            <div class="fixed inset-0 flex items-center justify-center z-50">
+                <div class="bg-white p-4 rounded-lg shadow-lg">
+                    <p>De antwoorden komen overeen met een eerder gemaakte validatie. <br>
+                        Het maken van dezelfde validatie verwijdert de oude, wilt u dooraan?</p>
+                    <div class="flex justify-between">
+                        <button wire:click="toggleValidatie" class="theme-button">
+                            Annuleren
+                        </button>
+                        <button
+                            wire:click="confirmDeleteValidatie({{ $laagsteDeelthemaId }}, {{ $uitdaging ? $uitdaging->id : 'null' }})"
+                            class="theme-button">
+                            Maak Nieuwe Validatie
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     @endif

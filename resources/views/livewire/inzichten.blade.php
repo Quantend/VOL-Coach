@@ -14,7 +14,7 @@
             <div class="flex justify-end mt-6">
                 <select
                     class="px-6 py-3 bg-white border border-gray-300 rounded-lg shadow text-gray-700 font-semibold focus:ring-2 focus:ring-blue-500"
-                    wire:model="filterStatus">
+                    wire:model="filterStatus" wire:change="getFilteredData">
                     <option value="all">Toon alle uitdagingen</option>
                     <option value="completed">Toon voltooide uitdagingen</option>
                     <option value="incomplete">Toon onvoltooide uitdagingen</option>

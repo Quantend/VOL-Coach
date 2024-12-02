@@ -4,6 +4,18 @@
         <p>Your validation has been successfully submitted.</p>
         <p>We appreciate your input.</p>
     @else
+        @if($pdfFile)
+            <p>
+                <a href="{{ asset('storage/' . $pdfFile) }}" download
+                   class="cursor-pointer theme-button">
+                    Download Validatie pdf
+                </a>
+            </p>
+            @else
+            <p>
+                geen validatie beschikbaar
+            </p>
+        @endif
     <h1>Validation Page</h1>
 
     <h1>Upload Validation PDF of word bestand en geef Feedback</h1>

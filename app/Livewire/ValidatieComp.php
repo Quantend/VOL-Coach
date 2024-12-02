@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\Validatie;
+use App\Models\Uitdaging;
 use Livewire\WithFileUploads;
 
 class ValidatieComp extends Component
@@ -13,6 +14,7 @@ class ValidatieComp extends Component
     public $user_id;
     public $token;
     public $validatie;
+    public $uitdaging;
     public $pdfFile;
     public $feedback; // The feedback input property
 
@@ -22,6 +24,8 @@ class ValidatieComp extends Component
         $this->token = $token;
 
         $this->validatie = Validatie::where('user_id', $user_id)->where('token', $token)->firstOrFail();
+        $this->uitdaging = Uitdaging::where('id', $this->validatie->uitdaging_id)->first();
+        $this->pdfFile = $this->uitdaging ? $this->uitdaging->validatie : null;
     }
 
     public function render()

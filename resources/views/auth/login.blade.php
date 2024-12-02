@@ -1,19 +1,20 @@
 <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-<div class="relative">
-    <a href="{{ route('home') }}">
-    <img class="ignore w-40 absolute left-4" src="{{asset('logo-vol.png')}}">
-    </a>
-  </div>
-  
 
 <x-guest-layout>
-
-    
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
     <form method="POST" action="{{ route('login') }}">
+
+        <!-- Logo -->
+        <div class="flex justify-center items-center absolute inset-0 z-10 -translate-y-[230px]">
+            <a href="{{ route('home') }}">
+                <img class="w-40 shadow-none" src="{{ asset('logo-vol.png') }}" alt="Logo">
+            </a>
+        </div>
+
+
         @csrf
 
         <!-- Email Address -->

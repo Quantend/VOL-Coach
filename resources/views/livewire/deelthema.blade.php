@@ -29,30 +29,29 @@
                             </button>
                         </div>
                     @else
+                        @if(!empty($opdrachten))
+                            <div class="">
+                                <h2 class="text-2xl font-bold">Opdrachten</h2>
+                                <p class="text-md font-semibold">Niveau: {{ $uitdaging->niveau }}</p>
+                                <ul class="list-disc pl-5">
+                                    @foreach($opdrachten as $opdracht)
+                                        <li>{{ $opdracht['opdracht'] }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
                         <div class="mt-6">
-                            <h2 class="text-2xl font-bold">Uitdaging</h2>
-                            <p class="text-md font-semibold">Niveau: {{ $uitdaging->niveau }}</p>
-
                             @if($uitdaging->validatie)
-                                <p>
-                                    <a href="{{ asset('storage/' . $uitdaging->validatie) }}" download
-                                       class="cursor-pointer theme-button">
-                                        Download Validatie pdf
-                                    </a>
-                                </p>
-
+                                <h2 class="text-2xl font-bold">Validatie link</h2>
                                 @if($hasValidatie && $token !== "completed")
-                                    <h2 class="text-2xl font-bold">Validatie link</h2>
-                                    <button onclick="copyToClipboard()" class="cursor-pointer theme-button">Copy Link</button>
                                     <p id="copyText">https://vol-coach.gildedevops.it/validatie/{{ auth()->id() }}/{{ $token }}</p>
-                                    <button wire:click="toggleHasValidatie"
-                                            class="cursor-pointer theme-button">
-                                        Genereer een nieuwe link
-                                    </button>
+                                    <button wire:click="generateAndSaveToken" class="cursor-pointer theme-button mr-4">Genereer een nieuwe link</button>
+                                    <button wire:click="deleteToken" class="cursor-pointer theme-button mr-4">Verwijder link</button>
+                                    <button onclick="copyToClipboard()" class="cursor-pointer theme-button">Kopieer link</button>
                                 @else
                                     <div>
                                             <div>
-                                                <button wire:click="generateAndSaveToken" type="submit" class="mt-6 cursor-pointer theme-button">Generate token
+                                                <button wire:click="generateAndSaveToken" type="submit" class="mt-6 cursor-pointer theme-button">Genereer link
                                                 </button>
                                             </div>
 
@@ -70,17 +69,6 @@
                                 <p class="text-md font-semibold">Nog geen validatie beschikbaar voor dit deelthema.</p>
                             @endif
                         </div>
-
-                        @if(!empty($opdrachten))
-                            <div class="mt-6">
-                                <h2 class="text-2xl font-bold">Opdrachten</h2>
-                                <ul class="list-disc pl-5">
-                                    @foreach($opdrachten as $opdracht)
-                                        <li>{{ $opdracht['opdracht'] }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
                         <div class="flex justify-center">
                             <button wire:click="toggleUitdagingen" class="mt-6 cursor-pointer theme-button">Toon
                                 Deelthema

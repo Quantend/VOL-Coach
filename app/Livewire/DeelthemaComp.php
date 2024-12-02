@@ -160,8 +160,25 @@ class DeelthemaComp extends Component
         $this->token = $randomToken;
 
         $this->hasValidatie = true;
-        // Show a success message
-        session()->flash('message', 'Token successfully generated and saved!');
+    }
+
+    public function deleteToken()
+    {
+        // Set the token property to null
+        $this->token = null;
+
+        // Find the Validatie record for the current user and deelthema
+        $validatie = Validatie::where('deelthema_id', $this->deelthema->id)
+            ->where('user_id', auth()->id())
+            ->first();
+
+        if ($validatie) {
+            // Clear the token in the database
+            $validatie->token = null;
+            $validatie->save();
+        }
+
+        $this->hasValidatie = false;
     }
 
     public function resetVoltooid()

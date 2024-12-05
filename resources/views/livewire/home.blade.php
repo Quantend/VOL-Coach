@@ -9,6 +9,8 @@
         </div>
     </div>
 </div>
-<div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 5000)" class="bg-green-600 text-white p-4 rounded mt-4">
+@if(session('message'))
+<div class="bg-green-600 text-white p-4 rounded mt-4">
     {{ session('message') }}
 </div>
+@endif

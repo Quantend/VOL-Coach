@@ -45,7 +45,7 @@ class RegisteredUserController extends Controller
 
         Mail::to($user->email)->send(new WelcomeMail($user));
 
-        session()->flash('message', 'You are now registered and logged in! A welcome email has been sent.');
+        session()->flash('message', 'You are now registered! A welcome email has been sent.');
 
         return redirect()->route('home');
     }

@@ -10,7 +10,7 @@
     </div>
 </div>
 @if(session('message'))
-<div class="bg-green-500 text-white p-4 rounded mt-4">
+<div class="bg-green-600 text-white p-4 rounded mt-4">
     {{ session('message') }}
 </div>
 @endif

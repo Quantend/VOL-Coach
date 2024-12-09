@@ -8,7 +8,7 @@
     <form method="POST" action="{{ route('login') }}">
 
         <!-- Logo -->
-        <div class="flex justify-center items-center absolute inset-0 z-10 -translate-y-[230px]">
+        <div class=" flex items-center justify-center">
             <a href="{{ route('home') }}">
                 <img class="w-40 shadow-none" src="{{ asset('logo-vol.png') }}" alt="Logo">
             </a>

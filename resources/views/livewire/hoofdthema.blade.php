@@ -24,7 +24,7 @@
             @endif
 
             @if($selectedHoofdthema)
-                <div class="mt-8">
+                <div class="bg-white p-4 sm:p-8 border rounded-xl">
                     <h2 class="text-4xl">{{ $selectedHoofdthema->naam }}</h2>
                     <div class="text-pink-500 font-medium mt-4 cursor-pointer hover:text-pink-700 transition-colors" wire:click="backToHoofdthemaList">Terug naar hoofdthema's</div>
                     @if(!empty($videoId))

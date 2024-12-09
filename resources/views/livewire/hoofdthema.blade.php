@@ -27,14 +27,14 @@
                 <div class="bg-white p-4 sm:p-8 border rounded-xl">
                     <h2 class="text-4xl">{{ $selectedHoofdthema->naam }}</h2>
                     <div class="text-pink-500 font-medium mt-4 cursor-pointer hover:text-pink-700 transition-colors" wire:click="backToHoofdthemaList">Terug naar hoofdthema's</div>
+                    <div class="">
+                        {!! $selectedHoofdthema->content !!}
+                    </div>
                     @if(!empty($videoId))
                         <div class="flex justify-center my-10">
                             <iframe height="400" width="100%" class="rounded-lg shadow-md" src="https://www.youtube.com/embed/{{ $videoId }}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                         </div>
                     @endif
-                    <div class="">
-                        {!! $selectedHoofdthema->content !!}
-                    </div>
                 </div>
                 <div class="mt-6 cursor-pointer theme-button" wire:click="startZelfscoreToets">
                     Start zelfscore

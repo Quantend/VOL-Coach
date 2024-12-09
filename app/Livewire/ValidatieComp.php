@@ -16,6 +16,7 @@ class ValidatieComp extends Component
     public $validatie;
     public $uitdaging;
     public $pdfFile;
+    public $validatiePdf;
     public $feedback; // The feedback input property
 
     public function mount($user_id, $token)
@@ -25,7 +26,7 @@ class ValidatieComp extends Component
 
         $this->validatie = Validatie::where('user_id', $user_id)->where('token', $token)->firstOrFail();
         $this->uitdaging = Uitdaging::where('id', $this->validatie->uitdaging_id)->first();
-        $this->pdfFile = $this->uitdaging ? $this->uitdaging->validatie : null;
+        $this->validatiePdf = $this->uitdaging ? $this->uitdaging->validatie : null;
     }
 
     public function render()

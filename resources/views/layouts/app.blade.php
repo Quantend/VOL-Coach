@@ -15,6 +15,9 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="antialiased">
+        <div class="sticky top-2 flex justify-center my-1">
+            <div wire:loading class="loader text-sm text-blue-500 mb-2"></div>
+        </div>
         <div class="min-h-screen bg-gray-300">
             @include('layouts.navigation')
 

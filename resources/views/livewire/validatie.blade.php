@@ -3,7 +3,6 @@
         <div class="text-center">
             <h1 class="text-3xl font-bold text-green-600 mb-4">Bedankt voor je feedback!</h1>
             <p class="text-lg text-gray-700 mb-2">Je validatie is succesvol ingediend.</p>
-            <p class="text-lg text-gray-700">We waarderen je input.</p>
         </div>
     @else
         <div class="mb-6">
@@ -31,46 +30,47 @@
                 {{ session('message') }}
             </div>
         @endif
-
         <form wire:submit.prevent="submitFeedback" enctype="multipart/form-data" class="space-y-4">
             <!-- Bestanden slepen en invoer -->
-            <div 
-                id="dropzone" 
-                class="border-2 border-dashed border-gray-300 p-6 rounded-lg text-center cursor-pointer"
-                @dragover.prevent="dragOver" 
-                @dragleave.prevent="dragLeave" 
-                @drop.prevent="handleDrop"
-            >
-                <div class="mb-4">
-                    <i class="fa fa-file-pdf text-red-500 text-3xl mr-4"></i>
-                    <i class="fa fa-file-word text-blue-500 text-3xl"></i>
-                </div>
-                <p class="text-gray-700 mb-2">Sleep je bestand hierheen of klik om te uploaden</p>
-                <input 
-                    type="file" 
-                    wire:model="pdfFile" 
-                    accept=".pdf,.docx" 
-                    class="hidden" 
-                    id="fileInput" 
-                    @change="handleFileChange"
-                >
-                <label 
-                    for="fileInput" 
-                    class="cursor-pointer text-blue-500 font-semibold"
-                >
-                    Kies een bestand
+            <div>
+                <label for="fileInput" >
+                    <div 
+                        id="dropzone" 
+                        class="border-2 border-dashed border-gray-300 p-6 rounded-lg text-center cursor-pointer mb-4"
+                        @dragover.prevent="dragOver" 
+                        @dragleave.prevent="dragLeave" 
+                        @drop.prevent="handleDrop"
+                    >
+                        <p class="text-gray-700 mb-2">Sleep je bestand hierheen of klik om te uploaden</p>
+                        <input 
+                            type="file" 
+                            wire:model="pdfFile" 
+                            accept=".pdf,.docx" 
+                            class="hidden" 
+                            id="fileInput" 
+                            @change="handleFileChange"
+                        >
+                        <div 
+                            class="cursor-pointer text-blue-500 font-semibold"
+                        >
+                            Kies een bestand
+                        </label>
+                        <div class="flex justify-center my-1">
+                            <div wire:loading wire:target="pdfFile" class="loader-bee text-sm text-blue-500 mb-2"></div>
+                        </div>
+                        @if($pdfFile)
+                            <p class="mt-2 text-gray-700">Bestand geselecteerd: <strong>{{ $pdfFile->getClientOriginalName() }}</strong></p>
+                        @endif
+                        <p class="text-sm text-gray-500 mt-2">Bestanden die geüpload kunnen worden: PDF, Word (.docx)</p>
+                        @error('pdfFile')
+                            <span class="text-red-500 text-sm">{{ $message }}</span>
+                        @enderror
+                    </div>
                 </label>
-                @if($pdfFile)
-                    <p class="mt-2 text-gray-700">Bestand geselecteerd: <strong>{{ $pdfFile->getClientOriginalName() }}</strong></p>
-                @endif
-                <p class="text-sm text-gray-500 mt-2">Bestanden die geüpload kunnen worden: PDF, Word (.docx)</p>
-                @error('pdfFile')
-                    <span class="text-red-500 text-sm">{{ $message }}</span>
-                @enderror
             </div>
 
             <!-- Feedback invoer -->
-            <div>
+            <div class="mb-6">
                 <textarea 
                     wire:model="feedback" 
                     placeholder="Geef extra feedback... (optioneel)" 

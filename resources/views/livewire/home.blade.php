@@ -7,11 +7,12 @@
                 <p>Je kunt een homepagina aanmaken in de url als je naar /admin gaat.</p>
             @endif
             @if(!empty($videoId))
-                <div class="flex justify-center my-10">
-                    <iframe height="400" width="100%" class="rounded-lg shadow-md"
-                            src="https://www.youtube.com/embed/{{ $videoId }}"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen></iframe>
+                <div class="flex justify-center aspect-[6/3] my-10">
+                    <iframe height="100%" width="100%" class="rounded-lg shadow-md"
+                        src="https://www.youtube.com/embed/{{ $videoId }}"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen>
+                    </iframe>
                 </div>
             @endif
         </div>

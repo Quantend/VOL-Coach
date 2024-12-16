@@ -31,7 +31,7 @@
             @endforeach
 
             <button type="submit"
-                    class="w-full py-3 px-6 rounded-lg text-lg font-semibold transition-colors duration-300"
+                    class="w-full py-3 px-6 rounded-full text-lg font-semibold transition-colors duration-300"
                     style="background-color: #dd0069; color: white;"
                     onmouseover="this.style.backgroundColor='#00365e'"
                     onmouseout="this.style.backgroundColor='#dd0069'">

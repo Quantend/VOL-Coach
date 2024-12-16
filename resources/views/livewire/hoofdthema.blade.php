@@ -25,8 +25,12 @@
 
             @if($selectedHoofdthema)
                 <div class="bg-white p-4 sm:p-8 border rounded-xl">
-                    <h2 class="text-4xl">{{ $selectedHoofdthema->naam }}</h2>
-                    <div class="text-pink-500 font-medium mt-4 cursor-pointer hover:text-pink-700 transition-colors" wire:click="backToHoofdthemaList">Terug naar hoofdthema's</div>
+                    <div class="flex justify-between items-center">
+                        <h2 class="text-4xl">{{ $selectedHoofdthema->naam }}</h2>
+                        <div class="fill-pink-400 w-7 cursor-pointer transition-all duration-200 ease-in-out hover:mr-1" wire:click="backToHoofdthemaList">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg>
+                        </div>
+                    </div>
                     <div class="">
                         {!! $selectedHoofdthema->content !!}
                     </div>

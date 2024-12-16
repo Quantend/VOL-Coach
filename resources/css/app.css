@@ -28,11 +28,11 @@
 .theme-button{
     color: #ffff;
     background-color: #00365e;
-    border-radius: 5px;
+    border-radius: 999px;
     font-family: 'maax-bold', sans-serif;
     display: inline-block;
-    padding: 10px 15px;
-    border: 2px solid #00365e;
+    padding: 8px 13px;
+    border: 3px solid #00365e;
     transition: 0.1s ease-in;
 }
 .theme-button:hover{

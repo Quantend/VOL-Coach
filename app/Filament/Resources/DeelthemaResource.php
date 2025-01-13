@@ -26,6 +26,9 @@ class DeelthemaResource extends Resource
     protected static ?string $model = Deelthema::class;
     protected static ?string $navigationIcon = 'heroicon-o-window';
     protected static ?string $navigationGroup = 'Contentbeheer';
+    protected static ?int $navigationSort = 3;
+    protected static ?string $label = 'Deelthema';
+    protected static ?string $pluralLabel = "Deelthema's";
 
     public static function form(Form $form): Form
     {
@@ -43,18 +46,19 @@ class DeelthemaResource extends Resource
                         TextInput::make('media')
                             ->label('Youtube link')
                     ]),
-                TextArea::make('beschrijving')
-                    ->maxLength(80)
-                    ->label('Korte beschrijving (maximaal 80 karakters)'),
-                Repeater::make('vragen')
-                    ->schema([
-                        TextInput::make('vraag')
-                    ]),
                 Grid::make(1)
                     ->schema([
                         TinyEditor::make('content')
                             ->profile('custom')
                             ->required(),
+                    ]),
+                Grid::make(1)
+                    ->schema([
+                        Repeater::make('vragen')
+                            ->schema([
+                                TextInput::make('vraag')
+                            ])
+                            ->addActionLabel('Voeg een nieuw vraag toe')    ,
                     ]),
             ]);
 
@@ -64,9 +68,13 @@ class DeelthemaResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('naam'),
-                TextColumn::make('hoofdthema.naam')->label('Hoofdthema'),
-                TextColumn::make('created_at')->label('Created')
+                TextColumn::make('naam')
+                    ->searchable(),
+                TextColumn::make('hoofdthema.naam')
+                    ->label('Hoofdthema')
+                    ->searchable(),
+                TextColumn::make('created_at')
+                    ->label('Created')
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

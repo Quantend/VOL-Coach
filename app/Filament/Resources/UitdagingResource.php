@@ -16,6 +16,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -25,7 +26,9 @@ class UitdagingResource extends Resource
     protected static ?string $model = Uitdaging::class;
     protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
     protected static ?string $navigationGroup = 'Contentbeheer';
-    protected static ?string $navigationLabel = 'Uitdagingen';
+    protected static ?string $label = 'Uitdaging';
+    protected static ?string $pluralLabel = 'Uitdagingen';
+    protected static ?int $navigationSort = 4;
 
     public static function form(Form $form): Form
     {
@@ -45,7 +48,7 @@ class UitdagingResource extends Resource
                                 'verdiepen' => 'verdiepen',
                             ]),
                         FileUpload::make('validatie')
-                            ->label('Validatie formulier (pdf)')
+                            ->label('Validatie formulier (pdf of word bestand)')
                             ->maxSize(2048)
                             ->preserveFilenames()
                             ->acceptedFileTypes(['application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/msword',]),
@@ -55,7 +58,8 @@ class UitdagingResource extends Resource
                         Repeater::make('opdrachten')
                             ->schema([
                                 TextInput::make('opdracht')
-                            ]),
+                            ])
+                            ->addActionLabel('Voeg een nieuw opdracht toe'),
                     ]),
             ]);
     }
@@ -64,12 +68,22 @@ class UitdagingResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('deelthema.naam')->label('Deelthema'),
-                TextColumn::make('niveau')->label('niveau'),
-                TextColumn::make('created_at')->label('Created'),
+                TextColumn::make('deelthema.naam')
+                    ->searchable()
+                    ->label('Deelthema'),
+                TextColumn::make('niveau')
+                    ->label('Niveau'),
+                TextColumn::make('created_at')
+                    ->label('Created'),
             ])
             ->filters([
-                //
+                SelectFilter::make('niveau')
+                    ->label('Niveau')
+                    ->options([
+                        'experimenteren' => 'Experimenteren',
+                        'toepassen' => 'Toepassen',
+                        'verdiepen' => 'Verdiepen',
+                    ]),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

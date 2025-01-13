@@ -11,13 +11,14 @@ class ValidatiePage extends Page
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
     protected static string $view = 'filament.pages.validatie';
+    protected static ?string $navigationLabel = 'Validatie Pagina';
 
     public $validaties;
     public $confirmingDeletion = false;
     public $deletingValidatieId;
     public $confirmingVoltooiUitdaging = false;
     public $upgradingValidatieId;
-    public $showVoltooid = false;
+    public $showVoltooid = true;
     public $feedbackText = '';
     public $givingFeedback = false;
     public $feedbackValidatieId;

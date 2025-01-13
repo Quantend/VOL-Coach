@@ -8,6 +8,8 @@ use Filament\Forms;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\Action;
+use Filament\Tables\Columns\BooleanColumn;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
@@ -18,6 +20,8 @@ class UserResource extends Resource
     protected static ?string $model = User::class;
     protected static ?string $navigationIcon = 'heroicon-o-users';
     protected static ?string $navigationGroup = 'Gebruikersbeheer';
+    protected static ?int $navigationSort = 5;
+    protected static ?string $label = 'Gebruiker';
 
     public static function form(Forms\Form $form): Forms\Form
     {
@@ -57,18 +61,18 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
+                TextColumn::make('name')
                     ->searchable()
                     ->label('Naam'),
 
-                Tables\Columns\TextColumn::make('email')
+                TextColumn::make('email')
                     ->searchable()
                     ->label('E-mail'),
 
-                Tables\Columns\BooleanColumn::make('is_admin')
+                BooleanColumn::make('is_admin')
                     ->label('Is Admin'),
 
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->label('Aangemaakt op'),
             ])

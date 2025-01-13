@@ -7,7 +7,9 @@
                     @foreach($hoofdthemas as $hoofdthema)
                         <div class="group/card p-4 hover:cursor-pointer shadow bg-white rounded-xl flex flex-col justify-between" wire:click="selectHoofdthema({{ $hoofdthema->id }})">
                             <p class="text-pink-400 text-xl font-maaxBold">{{ $hoofdthema->naam }}</p>
-                            <p class="text-gray-700">{{ $hoofdthema->beschrijving }}</p>
+                            <div class="mb-2">
+                            {!! $hoofdthema->beschrijving !!}
+                            </div>
                             <div>
                                 <div class="inline-flex items-center px-3 py-1.5 bg-blue-700 border rounded-full text-white transition-all duration-300 ease-in-out">
                                     <div class="mr-3">

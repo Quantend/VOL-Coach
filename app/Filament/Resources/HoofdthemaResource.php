@@ -24,6 +24,9 @@ class HoofdthemaResource extends Resource
     protected static ?string $model = Hoofdthema::class;
     protected static ?string $navigationIcon = 'heroicon-o-wallet';
     protected static ?string $navigationGroup = 'Contentbeheer';
+    protected static ?int $navigationSort = 2;
+    protected static ?string $label = 'Hoofdthema';
+    protected static ?string $pluralLabel = "Hoofdthema's";
 
     public static function form(Form $form): Form
     {
@@ -36,7 +39,8 @@ class HoofdthemaResource extends Resource
                     ->label('Youtube link'),
                 Grid::make(1)
                     ->schema([
-                        Textarea::make('beschrijving'),
+                        TinyEditor::make('beschrijving')
+                            ->profile('custom')
                     ]),
                 Grid::make(1)
                     ->schema([
@@ -51,8 +55,10 @@ class HoofdthemaResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('naam'),
-                TextColumn::make('created_at')->label('Created')
+                TextColumn::make('naam')
+                    ->searchable(),
+                TextColumn::make('created_at')
+                    ->label('Created')
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

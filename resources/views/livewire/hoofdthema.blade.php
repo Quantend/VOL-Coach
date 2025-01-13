@@ -1,6 +1,6 @@
 <div class="max-w-7xl mx-auto sm:px-6 lg:px-10 space-y-6 mt-8">
     <div class="p-4 sm:p-8 sm:rounded-lg">
-        <div class="">
+        <div>
             @if($showHoofdthemaList)
                 <h1 class="text-3xl">Hoofdthema's</h1>
                 <ul class="grid grid-cols-3 gap-4 p-0">

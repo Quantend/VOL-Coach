@@ -15,19 +15,19 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="antialiased">
-        <div class="sticky top-2 flex justify-center my-1">
-            <div wire:loading class="loader text-sm text-blue-500 mb-2"></div>
-        </div>
-        <div class="min-h-screen bg-gray-300">
-            @include('layouts.navigation')
 
-            <!-- Page Heading -->
+    <!-- Globale Loader -->
+    <div id="global-loader" class="sticky hidden top-2 flex justify-center mb-[-4px]">
+        <div class="loader"></div>
+    </div>
 
+    <div class="min-h-screen bg-gray-300">
+        @include('layouts.navigation')
 
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
-        </div>
-    </body>
+        <!-- Page Content -->
+        <main>
+            {{ $slot }}
+        </main>
+    </div>
+</body>
 </html>

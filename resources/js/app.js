@@ -20,23 +20,6 @@ function hideLoader() {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-    // Loader bij Fetch-aanroepen
-    document.querySelectorAll('[data-fetch]').forEach(button => {
-        button.addEventListener('click', function () {
-            showLoader();
-
-            fetch('/data')
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById('result').innerHTML = data;
-                })
-                .catch(error => console.error('Fout:', error))
-                .finally(() => {
-                    hideLoader();
-                });
-        });
-    });
-
     // loader verbergen na Livewire updates
     window.Livewire && Livewire.hook('message.processed', () => {
         hideLoader();

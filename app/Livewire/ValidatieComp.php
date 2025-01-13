@@ -74,7 +74,7 @@ class ValidatieComp extends Component
             $validatie->save();                      // Save the updated record
         }
 
-        // Set a success message
+        // Set a succes message
         session()->flash('message', 'PDF successfully uploaded!');
 
         // Redirect to the new token (completed)

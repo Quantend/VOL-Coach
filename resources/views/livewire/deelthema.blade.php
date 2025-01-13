@@ -12,7 +12,7 @@
                             </svg>
                         </div>
                         <div class="pl-2 text-pink-400 font-semibold">
-                            Terug naar Heelthema's
+                            Terug naar Deelthema's
                         </div>
                     </button>
                 </div>

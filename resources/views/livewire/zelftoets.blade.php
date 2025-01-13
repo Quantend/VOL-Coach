@@ -45,7 +45,7 @@
             <div class="fixed inset-0 flex items-center justify-center z-50">
                 <div class="bg-white p-4 rounded-lg shadow-lg">
                     <p>De antwoorden komen overeen met een eerder gemaakte validatie. <br>
-                        Het maken van dezelfde validatie verwijdert de oude, wilt u dooraan?</p>
+                        Het maken van dezelfde validatie verwijdert de oude, wilt u doorgaan?</p>
                     <div class="flex justify-between">
                         <button wire:click="toggleValidatie" class="theme-button">
                             Annuleren

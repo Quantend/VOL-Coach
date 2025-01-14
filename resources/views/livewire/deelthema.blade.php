@@ -40,7 +40,7 @@
                     @else
                         @if(!empty($opdrachten))
                             <div class="">
-                                <h2 class="text-2xl font-bold">Opdrachten</h2>
+                                <h2 class="text-2xl font-bold">Opdracht</h2>
                                 <p class="text-md font-semibold">Niveau: {{ $uitdaging->niveau }}</p>
                                 <ul class="list-disc pl-5">
                                     @foreach($opdrachten as $opdracht)

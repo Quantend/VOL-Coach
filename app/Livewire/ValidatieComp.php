@@ -41,16 +41,16 @@ class ValidatieComp extends Component
             'pdfFile' => 'required|file|mimes:pdf,docx|max:51200', // Max 50MB
             'feedback' => 'nullable|string|max:255',
         ]);
-
+    
         // Generate a unique name for the PDF file
         $pdfName = time() . '_' . $this->pdfFile->getClientOriginalName();
-
+    
         // Store the PDF file in the public 'pdfs' folder
         $path = $this->pdfFile->storeAs('pdfs', $pdfName, 'public');
-
+    
         // Determine the uitdaging_id (it seems like this logic is still relevant)
         $uitdagingId = $this->validatie->uitdaging_id; // Assuming `uitdaging_id` is part of `validatie` model
-
+    
         // Find or create a Validatie record for the current user and token
         $validatie = Validatie::firstOrCreate(
             [
@@ -64,7 +64,7 @@ class ValidatieComp extends Component
                 'voltooid' => 1,
             ]
         );
-
+    
         // If the validatie record already exists, update the PDF file
         if (!$validatie->wasRecentlyCreated) {
             $validatie->validatie_antwoord = $path; // Update the validatie_antwoord with new file path
@@ -73,14 +73,25 @@ class ValidatieComp extends Component
             $validatie->token = 'completed';
             $validatie->save();                      // Save the updated record
         }
+    
+        // Send a mail to the user
 
-        // Set a succes message
-        session()->flash('message', 'PDF successfully uploaded!');
-
+        $user = \App\Models\User::find($this->user_id); // Fetch the user
+    
+        if ($user) {
+            \Mail::send('emails.validation-notification', [], function ($message) use ($user) {
+                $message->to($user->email) // Send to the user's email
+                    ->subject('Validation Submitted');
+            });
+        }
+    
+        // Set a success message
+        session()->flash('message', 'PDF successfully uploaded and email sent to the User!');
+    
         // Redirect to the new token (completed)
         return redirect()->route('validatie', [
             'user_id' => $this->user_id,
             'token' => 'completed'  // Redirect to the updated 'completed' token
         ]);
-    }
+    }    
 }

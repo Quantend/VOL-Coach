@@ -31,7 +31,7 @@ class HelpController extends Controller
 
 
         $admin = [
-            'developer@vol-coach.gildedevops.it',
+            'VOLcoach@rocgilde.nl',
         ];
 
        Mail::to($admin)->send(new HelpMail($details));

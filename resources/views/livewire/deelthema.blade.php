@@ -12,7 +12,7 @@
                             </svg>
                         </div>
                         <div class="pl-2 text-pink-400 font-semibold">
-                            Terug naar Deelthema's
+                            Terug naar Hoofdthema's
                         </div>
                     </button>
                 </div>
@@ -36,7 +36,7 @@
                             <button wire:click="toggleUitdagingen" class="mt-6 cursor-pointer theme-button">Toon
                                 Uitdagingen
                             </button>
-                        </div>
+                                                      </div>
                     @else
                         @if(!empty($opdrachten))
                             <div class="">
@@ -117,6 +117,11 @@
                             <button wire:click="toggleUitdagingen" class="mt-6 cursor-pointer theme-button">Toon
                                 Deelthema
                             </button>
+                            <a href="{{ route('hoofdthema') }}">
+                                <button class="mt-6 cursor-pointer theme-button">
+                                  Terug naar Hoofdthema
+                                </button>
+                              </a>
                         </div>
                     @endif
                 @else

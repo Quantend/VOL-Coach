@@ -92,7 +92,7 @@ class ZelftoetsComp extends Component
         if ($laagsteDeelthemaId !== null) {
             $niveau = '';
 
-            if ($laagsteGemiddelde <= 3) {
+            if ($laagsteGemiddelde <= 2.2) {
                 $niveau = 'experimenteren';
             } elseif ($laagsteGemiddelde > 3 && $laagsteGemiddelde <= 4) {
                 $niveau = 'toepassen';

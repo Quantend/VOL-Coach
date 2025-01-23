@@ -1,5 +1,5 @@
 <div>
-    <div class="max-w-3xl mx-auto p-6 bg-gray-100 rounded-lg mt-10 shadow-md">
+    <div class="max-w-3xl mx-auto p-6 bg-gray-100 rounded-lg mt-10 shadow-md relative">
         <h2 class="text-3xl font-semibold text-center mb-6" style="color: #00365e;">Zelfscore</h2>
 
         <form wire:submit.prevent="saveAntwoorden" class="space-y-6">
@@ -38,6 +38,9 @@
                 Opslaan
             </button>
         </form>
+        <button class="theme-button hover:bg-white absolute top-4 right-4">
+            <a href="{{ route('help') }}" class="no-underline text-white">Vraag een VOL-coach</a>
+        </button>
     </div>
     <div class="h-10"></div>
     @if($showValidatieDelete)

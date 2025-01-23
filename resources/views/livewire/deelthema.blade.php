@@ -1,17 +1,17 @@
 <div class="max-w-7xl mx-auto sm:px-6 lg:px-10 space-y-6 mt-8">
-    <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+    <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg relative">
         @if($hideUitdagingen)
             <div>
                 <div class="flex justify-between items-center mb-4">
                     <h1 class="text-3xl">{{ $deelthema->naam }}</h1>
                     <button wire:click="backToHoofdthema({{ $deelthema->hoofdthema_id }})"
                         class="flex items-center cursor-pointer group">
-                        <div class="fill-pink-400 w-5 transition-all duration-200 ease-in-out group-hover:mr-1">
+                        <div class="fill-pink-400 w-5 transition-all duration-200 ease-in-out group-hover:mr-1 mt-11">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
                                 <path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/>
                             </svg>
                         </div>
-                        <div class="pl-2 text-pink-400 font-semibold">
+                        <div class="pl-2 text-pink-400 font-semibold mt-11">
                             Terug naar Hoofdthema's
                         </div>
                     </button>
@@ -114,9 +114,7 @@
                             @endif
                         </div>
                         <div class="flex justify-center">
-                            <button wire:click="toggleUitdagingen" class="mt-6 cursor-pointer theme-button">Toon
-                                Deelthema
-                            </button>
+                            <button wire:click="toggleUitdagingen" class="mt-6 cursor-pointer theme-button">Terug naar Theorie</button>
                             <a href="{{ route('hoofdthema') }}">
                                 <button class="mt-6 cursor-pointer theme-button">
                                   Terug naar Hoofdthema
@@ -124,6 +122,9 @@
                               </a>
                         </div>
                     @endif
+                    <button class="theme-button hover:bg-white absolute top-4 right-4">
+                        <a href="{{ route('help') }}" class="no-underline text-white">Vraag een VOL-coach</a>
+                    </button>
                 @else
                     <p class="flex justify-center mt-10">Geen uitdagingen beschikbaar</p>
                 @endif

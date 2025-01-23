@@ -1,5 +1,5 @@
 <div class="max-w-7xl mx-auto sm:px-6 lg:px-10 space-y-6 mt-8">
-    <div class="bg-gray-100 p-6 sm:p-10 rounded-xl shadow-md">
+    <div class="bg-gray-100 p-6 sm:p-10 rounded-xl shadow-md relative">
         <div>
             <h1 class="text-2xl font-bold text-gray-800">Overzicht</h1>
         </div>
@@ -70,5 +70,8 @@
                     </tbody>
                 </table>
             @endif
+            <button class="theme-button hover:bg-white absolute top-4 right-4">
+                <a href="{{ route('help') }}" class="no-underline text-white">Vraag een VOL-coach</a>
+            </button>
     </div>
 </div>

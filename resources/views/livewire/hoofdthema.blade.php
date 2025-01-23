@@ -1,5 +1,5 @@
 <div class="max-w-7xl mx-auto sm:px-6 lg:px-10 space-y-6 mt-8">
-    <div class="p-4 sm:p-8 sm:rounded-lg">
+    <div class="p-4 sm:p-8 sm:rounded-lg relative">
         <div>
             @if($showHoofdthemaList)
                 <h1 class="text-3xl">Hoofdthema's</h1>
@@ -21,6 +21,9 @@
                                 </div>
                             </div>
                         </div>
+                        <button class="theme-button hover:bg-white absolute top-4 right-4">
+                            <a href="{{ route('help') }}" class="no-underline text-white">Vraag een VOL-coach</a>
+                        </button>
                     @endforeach
                 </ul>
             @endif
@@ -46,6 +49,7 @@
                     Start zelfscore
                 </div>
             @endif
+            
         </div>
     </div>
 </div>
